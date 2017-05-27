@@ -11,4 +11,4 @@ export function padNewLines(amount: number) {
   }
 }
 
-export const isTest = (x: any): x is Test<any> => !!x['@@typed/test']
+export const isTest = (x: any): x is Test => !!x['@@typed/test']

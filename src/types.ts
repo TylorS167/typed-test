@@ -15,7 +15,7 @@ export interface SingularTest {
 
 export interface GroupTest {
   readonly '@@typed/test': string,
-  readonly tests: Array<Test<any>>
+  readonly tests: Array<Test>
 }
 
-export type Test<A> = SingularTest | GroupTest
+export type Test = SingularTest | GroupTest

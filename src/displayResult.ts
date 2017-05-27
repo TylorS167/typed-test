@@ -9,7 +9,7 @@ import { padNewLines } from './internal'
 const good = (type: string, s: string) => `${green(tick)} ${blue(type)} ${reset(s)}`
 const failed = (type: string, s: string) => `${red(cross)} ${blue(type)} ${reset(s)}`
 
-export function displayResult<A>(test: Test<A>): Promise<string> {
+export function displayResult(test: Test): Promise<string> {
   if (test.hasOwnProperty('tests')) {
     const { '@@typed/test': name, tests } = test as GroupTest
 
