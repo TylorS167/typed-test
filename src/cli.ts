@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import * as expand from 'glob-expand'
 import * as yargs from 'yargs'
 
