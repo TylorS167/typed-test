@@ -1,3 +1,13 @@
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/TylorS/typed-test/compare/v0.3.0...v0.4.0) (2017-05-30)
+
+
+### Bug Fixes
+
+* **it:** ensure that async tests use done ([c9c0a34](https://github.com/TylorS/typed-test/commit/c9c0a34))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/TylorS/typed-test/compare/v0.2.0...v0.3.0) (2017-05-27)
 
