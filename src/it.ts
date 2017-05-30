@@ -15,7 +15,10 @@ function _it<A>(name: string, test: Arity1<Done, A | Promise<A>>): SingularTest 
       resolve({ name, passed: false, error: just(error) }) :
       resolve({ name, passed: true, error: nothing() })
 
-    bimap(done, () => done(), runTest(test, done))
+    bimap(done, () => {
+      if (test.length === 0)
+        return done()
+    }, runTest(test, done))
   })
 
   return ({ '@@typed/test': 'it', run })
