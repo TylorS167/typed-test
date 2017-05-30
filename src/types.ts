@@ -11,6 +11,7 @@ export interface Result {
 export interface SingularTest {
   readonly '@@typed/test': string
   readonly run: () => Promise<Result>
+  readonly name: string,
 }
 
 export interface GroupTest {

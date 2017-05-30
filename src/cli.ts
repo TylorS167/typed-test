@@ -43,6 +43,6 @@ else {
   })
 
   tests.map(displayResult).forEach((result) => {
-    result.then(console.log)
+    result.then(console.log, console.error)
   })
 }

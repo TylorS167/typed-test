@@ -1,7 +1,7 @@
 import { GroupTest, Result, SingularTest, Test } from './types'
 import { Just, fromJust, join, map } from '167'
-import { all, chain, map as mapP, resolved } from '@typed/promises'
 import { blue, bold, green, red, reset } from 'typed-colors'
+import { chain, map as mapP, resolved } from '@typed/promises'
 import { cross, tick } from 'typed-figures'
 
 import { padNewLines } from './internal'
@@ -9,13 +9,27 @@ import { padNewLines } from './internal'
 const good = (type: string, s: string) => `${green(tick)} ${blue(type)} ${reset(s)}`
 const failed = (type: string, s: string) => `${red(cross)} ${blue(type)} ${reset(s)}`
 
+function sequence<A>(tests: ReadonlyArray<Test>, f: (test: Test) => Promise<A>): Promise<Array<A>> {
+  let promise = resolved<any>('')
+  const results: Array<A> = []
+
+  for (const test of tests) {
+    promise = chain(
+      () => f(test).then((result) => results.push(result)),
+      promise,
+    )
+  }
+
+  return mapP(() => results, promise)
+}
+
 export function displayResult(test: Test): Promise<string> {
   if (test.hasOwnProperty('tests')) {
     const { '@@typed/test': name, tests } = test as GroupTest
 
     const results =
       mapP<Array<string>, ReadonlyArray<string>>(map(padNewLines(2)),
-        all<Array<string>>(...tests.map(displayResult)))
+        sequence(tests, displayResult))
 
     return mapP((strs) => `${blue(name)}` + `\n  ` + join('\n\n  ', strs), results)
   }

@@ -17,7 +17,6 @@
     "@briancavalier/assert": "^3.4.0",
     "@motorcycle/tslint": "^3.1.0",
     "@types/glob-expand": "^0.0.30",
-    "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.22",
     "@types/yargs": "^6.6.0",
     "commitizen": "^2.9.6",
@@ -25,7 +24,6 @@
     "cz-conventional-changelog": "^2.0.0",
     "glob-expand": "^0.2.1",
     "husky": "^0.13.3",
-    "mocha": "^3.4.2",
     "rimraf": "^2.6.1",
     "ts-node": "^3.0.4",
     "tslint": "^5.3.2",
@@ -54,6 +52,6 @@
     "release:minor": "npm version minor -m 'chore(package): v%s'",
     "test": "yarn test:lint && yarn test:unit",
     "test:lint": "tslint --project tsconfig.json --type-check",
-    "test:unit": "mocha -r ts-node/register 'src/**/*.test.ts'"
+    "test:unit": "ts-node src/cli.ts 'src/**/*.test.ts'"
   }
 }
