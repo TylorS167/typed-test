@@ -1,3 +1,14 @@
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/TylorS/typed-test/compare/v0.7.0...v0.8.0) (2017-05-31)
+
+
+### Bug Fixes
+
+* **cli:** delete test file along with changed file ([25bd3ee](https://github.com/TylorS/typed-test/commit/25bd3ee))
+* **cli:** invalidate cache ([9a80d2a](https://github.com/TylorS/typed-test/commit/9a80d2a))
+
+
+
 <a name="0.7.0"></a>
 # [0.7.0](https://github.com/TylorS/typed-test/compare/v0.6.0...v0.7.0) (2017-05-31)
 
