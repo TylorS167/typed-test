@@ -41,18 +41,21 @@ Now from your terminal
 
 ```sh
 # to use with typescript
-./node_modules/.bin/test -r ts-node/register src/*.test.ts
+./node_modules/.bin/typed-test -r ts-node/register src/*.test.ts
 # or without any requires
-./node_modules/.bin/test src/*.test.js
+./node_modules/.bin/typed-test src/*.test.js
+
+# to enable watch mode
+./node_modules/.bin/typed-test -r ts-node/register --watch src/*.test.ts
 ```
 
 ## API
 
-### `describe(name: string, ...tests: Array<Test>): Test`
+### `describe(name: string, ...tests: Array<Test | Array<Test>>): Test`
 
 Describe a collection of tests. Used to create more descriptive test results.
 
-### `given(name: string, ...tests: Array<Test>): Test`
+### `given(name: string, ...tests: Array<Test | Array<Test>>): Test`
 
 Similar to `describe` -- allows for writing more descriptive test results
 
@@ -62,3 +65,7 @@ The only built-in test function. The `test` callback function is similar to many
 test frameworks such a `mocha`. Thrown errors and rejected promises can be used
 to signal test failures. Asynchronous test can be dealt with by calling the `done` function
 passed into the test function or via a `Promise`.
+
+### `beforeEach(before: (done: Done) => A | Promise<A>, ...tests: Array<Test | Array<Test>>): Array<Test>`
+
+Allows running a function before each test.
