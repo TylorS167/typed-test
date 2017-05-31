@@ -43,6 +43,10 @@ function getTestFiles(files: Array<string>) {
 }
 
 function runTests(testFiles: Array<string>) {
+  require.cache.forEach((file: string) => {
+    delete require.cache[file]
+  })
+
   console.log('\x1Bc')
   console.log(bold(`Typed Test`))
 
@@ -83,7 +87,6 @@ function watch(files: Array<string>) {
 
   testDirectories.forEach((dir) => {
     fs.watch(dir, { recursive: true }, (_, fileName: string) => {
-      delete require.cache[join(dir, fileName)]
 
       testFiles = getTestFiles(files)
 
@@ -92,6 +95,8 @@ function watch(files: Array<string>) {
 
       for (const name of testNames)
         if (isTestFile(adjustFileName(name, join(dir, fileName)))) {
+          delete require.cache[join(dir, fileName)]
+          delete require.cache[adjustFileName(name, join(dir, fileName))]
 
           return runTests([ adjustFileName(name, join(dir, fileName)) ])
         }
