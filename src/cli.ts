@@ -9,7 +9,7 @@ import { dirname, join } from 'path'
 import { bold } from 'typed-colors'
 import { displayResult } from './displayResult'
 import { isTest } from './internal'
-import { map } from '167'
+import { map, copy } from '167'
 import { sequence } from '@typed/sequence'
 
 const parsedArgs = yargs
@@ -42,10 +42,16 @@ function getTestFiles(files: Array<string>) {
   ) as Array<string>
 }
 
+function destroyCache() {
+  const cache = copy<string>(require.cache)
+
+  // tslint:disable-next-line:prefer-for-of
+  for (let i = 0; i < cache.length; ++i)
+    delete require.cache[cache[i]]
+}
+
 function runTests(testFiles: Array<string>) {
-  require.cache.forEach((file: string) => {
-    delete require.cache[file]
-  })
+  destroyCache()
 
   console.log('\x1Bc')
   console.log(bold(`Typed Test`))
