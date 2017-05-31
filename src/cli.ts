@@ -83,14 +83,18 @@ function watch(files: Array<string>) {
 
   testDirectories.forEach((dir) => {
     fs.watch(dir, { recursive: true }, (_, fileName: string) => {
+      delete require.cache[join(dir, fileName)]
+
       testFiles = getTestFiles(files)
 
       if (isTestFile(join(dir, fileName)))
         return runTests([ join(dir, fileName) ])
 
       for (const name of testNames)
-        if (isTestFile(adjustFileName(name, join(dir, fileName))))
+        if (isTestFile(adjustFileName(name, join(dir, fileName)))) {
+
           return runTests([ adjustFileName(name, join(dir, fileName)) ])
+        }
 
       runTests(testFiles)
     })
