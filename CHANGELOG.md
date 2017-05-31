@@ -1,3 +1,14 @@
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/TylorS/typed-test/compare/v0.4.0...v0.5.0) (2017-05-31)
+
+
+### Features
+
+* **beforeEach:** implement beforeEach ([58aa969](https://github.com/TylorS/typed-test/commit/58aa969))
+* **cli:** implement watch mode ([875f063](https://github.com/TylorS/typed-test/commit/875f063))
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/TylorS/typed-test/compare/v0.3.0...v0.4.0) (2017-05-30)
 
