@@ -23,7 +23,6 @@
     "commitizen": "^2.9.6",
     "conventional-changelog-cli": "^1.3.1",
     "cz-conventional-changelog": "^2.0.0",
-    "glob-expand": "^0.2.1",
     "husky": "^0.13.3",
     "rimraf": "^2.6.1",
     "ts-node": "^3.0.4",
@@ -35,6 +34,7 @@
     "167": "^0.25.0",
     "@typed/promises": "^2.1.0",
     "@typed/sequence": "^1.1.0",
+    "glob-expand": "^0.2.1",
     "typed-colors": "^1.0.0",
     "typed-figures": "^1.0.0",
     "yargs": "^8.0.1"
