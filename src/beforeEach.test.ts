@@ -7,7 +7,7 @@ let i = 0
 export const test: Test =
   describe(beforeEach.name,
     beforeEach(
-      () => { ++i },
+      () => { i++ },
 
       it(`should run before me`, () => {
         eq(1, i)

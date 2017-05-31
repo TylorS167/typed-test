@@ -9,6 +9,7 @@
   "jsnext:main": "lib.es2015/index.js",
   "module": "lib.es2015/index.js",
   "bin": {
+    "typed-test": "lib/cli.js",
     "test": "lib/cli.js"
   },
   "author": "Tylor Steinberger <tlsteinberger167@gmail.com>",
@@ -33,6 +34,7 @@
   "dependencies": {
     "167": "^0.25.0",
     "@typed/promises": "^2.1.0",
+    "@typed/sequence": "^1.1.0",
     "typed-colors": "^1.0.0",
     "typed-figures": "^1.0.0",
     "yargs": "^8.0.1"
