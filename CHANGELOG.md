@@ -1,3 +1,13 @@
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/TylorS/typed-test/compare/v0.8.0...v0.9.0) (2017-06-01)
+
+
+### Bug Fixes
+
+* **internal:** handle promises better ([fac6b08](https://github.com/TylorS/typed-test/commit/fac6b08))
+
+
+
 <a name="0.8.0"></a>
 # [0.8.0](https://github.com/TylorS/typed-test/compare/v0.7.0...v0.8.0) (2017-05-31)
 
