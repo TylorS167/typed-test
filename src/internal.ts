@@ -20,9 +20,9 @@ export const isSingularTest = (x: Test): x is SingularTest =>
 
 export const isGroupTest = (x: Test): x is GroupTest => Array.isArray((x as GroupTest).tests)
 
-export function createTestRun<A>(test: Arity1<Done, A | Promise<A>>, name: string) {
+export function createTestRun(test: Arity1<Done, any>, name: string) {
   return function() {
-    return create<Result>(({ resolve }) => {
+    return create<Result>(({ resolve }: { resolve: Arity1<Result, void> }) => {
       const done: Done = (error?: Error) => !!error ?
         resolve({ name, passed: false, error: just(error) }) :
         resolve({ name, passed: true, error: nothing() })
@@ -35,7 +35,12 @@ export function createTestRun<A>(test: Arity1<Done, A | Promise<A>>, name: strin
 
 function runTest<A>(test: Arity1<Done, A | Promise<A>>, done: Done): Promise<A> {
   try {
-    return resolved(test(done))
+    const r = test(done)
+
+    if (r && typeof (r as Promise<A>).then === 'function')
+      return r as Promise<A>
+
+    return resolved(r)
   } catch (e) {
     return rejected(e)
   }

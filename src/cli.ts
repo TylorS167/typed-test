@@ -94,6 +94,9 @@ function watch(files: Array<string>) {
   testDirectories.forEach((dir) => {
     fs.watch(dir, { recursive: true }, (_, fileName: string) => {
 
+      if (isDirectory(fileName))
+        return watch(files)
+
       testFiles = getTestFiles(files)
 
       if (isTestFile(join(dir, fileName)))
@@ -116,4 +119,10 @@ function adjustFileName(post: string, fileName: string): string {
   const [ pre ] = fileName.split('.ts')
 
   return pre + `${post}.ts`
+}
+
+function isDirectory(file: string) {
+  const stats = fs.statSync(file)
+
+  return stats.isDirectory()
 }

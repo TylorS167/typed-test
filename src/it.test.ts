@@ -10,6 +10,7 @@ export const test: Test = describe('it', [
 
     const itTestFails = it(name, () => { throw error })
     const itTestPasses = it(name, (done) => done())
+    const itTestPassesPromise = it(name, () => Promise.resolve())
 
     const hasFailed = eq({ name, passed: false, error: just(error) })
     const hasPassed = eq({ name, passed: true, error: nothing() })
@@ -17,6 +18,7 @@ export const test: Test = describe('it', [
     return Promise.all([
       itTestFails.run().then(hasFailed),
       itTestPasses.run().then(hasPassed),
+      itTestPassesPromise.run().then(hasPassed),
     ])
   }),
 ])
