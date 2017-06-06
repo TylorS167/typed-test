@@ -1,4 +1,5 @@
 export * from './AssertionError'
+export * from './createAssertionsEnvironment'
 export * from './createDiff'
 export * from './equal'
 export * from './notEqual'
