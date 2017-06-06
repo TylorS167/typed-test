@@ -43,7 +43,7 @@
     ]
   },
   "scripts": {
-    "build": "yarn build:commonjs && yarn build:es2015 && chmod + x lib/cli.js",
+    "build": "npm run build:commonjs && npm run build:es2015 && chmod + x lib/cli.js",
     "build:commonjs": "tsc -P .config/tsconfig.commonjs.json",
     "build:es2015": "tsc -P .config/tsconfig.es2015.json",
     "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0 -p angular",
@@ -55,8 +55,8 @@
     "preversion": "npm test && npm run build",
     "release:major": "npm version major -m 'chore(package): v%s'",
     "release:minor": "npm version minor -m 'chore(package): v%s'",
-    "test": "yarn test:lint && yarn test:unit",
+    "test": "npm run test:lint && npm run test:unit",
     "test:lint": "prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote --trailing-comma es5 --parser typescript 'src/*.ts' 'src/**/*.ts'",
-    "test:unit": "mocha -r ts-node/register 'src/*.ts' 'src/**/*.test.ts'"
+    "test:unit": "mocha -r ts-node/register 'src/*.test.ts' 'src/**/*.test.ts'"
   }
 }
