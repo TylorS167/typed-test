@@ -10,8 +10,7 @@ export function createDiff(assertionError: AssertionError<any>): string {
 
   if (typeof actual === 'object' && typeof expected === 'object')
     str += formatDiff(diffJson(actual, expected))
-  else
-    str += `${JSON.stringify(expected)} !== ${JSON.stringify(actual)}\n`
+  else str += `${JSON.stringify(expected)} !== ${JSON.stringify(actual)}\n`
 
   return str
 }

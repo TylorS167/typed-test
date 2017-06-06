@@ -9,28 +9,32 @@
   "jsnext:main": "lib.es2015/index.js",
   "module": "lib.es2015/index.js",
   "bin": {
-    "typed-test": "lib/cli.js",
-    "test": "lib/cli.js"
+    "typed-test": "lib/cli.js"
   },
   "author": "Tylor Steinberger <tlsteinberger167@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/diff": "^3.2.0",
+    "@types/glob-expand": "0.0.30",
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.27",
+    "@types/yargs": "^6.6.0",
     "husky": "^0.13.4",
     "lint-staged": "^3.6.0",
     "mocha": "^3.4.2",
     "prettier": "^1.4.2",
-    "ts-node": "^3.0.4",
     "typescript": "^2.3.4",
     "validate-commit-msg": "^2.12.1"
   },
   "dependencies": {
     "167": "^0.29.0",
     "diff": "^3.2.0",
+    "gaze": "^1.1.2",
+    "glob-expand": "^0.2.1",
+    "ts-node": "^3.0.6",
     "typed-colors": "^1.0.0",
-    "typed-figures": "^1.0.0"
+    "typed-figures": "^1.0.0",
+    "yargs": "^8.0.1"
   },
   "lint-staged": {
     ".ts": [
@@ -39,7 +43,7 @@
     ]
   },
   "scripts": {
-    "build": "yarn build:commonjs && yarn build:es2015",
+    "build": "yarn build:commonjs && yarn build:es2015 && chmod + x lib/cli.js",
     "build:commonjs": "tsc -P .config/tsconfig.commonjs.json",
     "build:es2015": "tsc -P .config/tsconfig.es2015.json",
     "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0 -p angular",
@@ -48,7 +52,7 @@
     "commitmsg": "validate-commit-msg",
     "postchangelog": "git add CHANGELOG.md && git commit -m 'docs(CHANGELOG): amend changelog'",
     "postversion": "npm run changelog && git push origin master --tags && npm publish",
-    "preversion": "yarn test && yarn build",
+    "preversion": "npm test && npm run build",
     "release:major": "npm version major -m 'chore(package): v%s'",
     "release:minor": "npm version minor -m 'chore(package): v%s'",
     "test": "yarn test:lint && yarn test:unit",

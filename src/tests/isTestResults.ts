@@ -1,5 +1,5 @@
 import { TestResults } from '../types'
 
 export function isTestResults(x: any): x is TestResults {
-  return x && x.hasOwnProperty('name') && x.hasOwnProperty('results')
+  return x && x.hasOwnProperty('passed') && x.hasOwnProperty('results')
 }
