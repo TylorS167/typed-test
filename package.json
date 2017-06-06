@@ -29,7 +29,8 @@
   "dependencies": {
     "167": "^0.29.0",
     "diff": "^3.2.0",
-    "typed-colors": "^1.0.0"
+    "typed-colors": "^1.0.0",
+    "typed-figures": "^1.0.0"
   },
   "lint-staged": {
     ".ts": [

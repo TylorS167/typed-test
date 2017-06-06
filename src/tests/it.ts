@@ -1,5 +1,7 @@
-import { Assertions, createAssertionsEnvironment } from '../assertions'
-import { Test, TestFn, TestResult } from './types'
+import { Assertions, Test, TestFn, TestResult } from '../types'
+
+import { blue } from 'typed-colors'
+import { createAssertionsEnvironment } from '../assertions'
 
 export function it(does: string, test: TestFn): Test {
   return new It(does, test)
@@ -10,7 +12,7 @@ class It implements Test {
   protected test: TestFn
 
   constructor(name: string, test: TestFn) {
-    this.name = name
+    this.name = `${blue('it')} ${name}`
     this.test = test
   }
 

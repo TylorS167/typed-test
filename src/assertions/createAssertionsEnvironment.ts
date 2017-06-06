@@ -1,3 +1,5 @@
+import { AssertionEnvironment, Assertions, Stats } from '../types'
+
 import { equal } from './equal'
 import { notEqual } from './notEqual'
 import { notOk } from './notOk'
@@ -5,25 +7,6 @@ import { ok } from './ok'
 import { rejects } from './rejects'
 import { same } from './same'
 import { throws } from './throws'
-
-export interface Assertions {
-  equal: typeof equal
-  notEqual: typeof notEqual
-  notOk: typeof notOk
-  ok: typeof ok
-  rejects: typeof rejects
-  same: typeof same
-  throws: typeof throws
-}
-
-export interface Stats {
-  count: number
-}
-
-export interface AssertionEnvironment {
-  stats: Stats
-  assertions: Assertions
-}
 
 export function createAssertionsEnvironment(): AssertionEnvironment {
   const stats: Stats = { count: 0 }

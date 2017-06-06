@@ -6,11 +6,14 @@ import { diffJson } from 'diff'
 export function createDiff(assertionError: AssertionError<any>): string {
   const { message, actual, expected } = assertionError
 
-  return (
-    bold(`AssertionError: ${message}\n`) +
-    `  ${red('- expected')} ${green('+ actual')}\n\n` +
-    formatDiff(diffJson(actual, expected))
-  )
+  let str = bold(`AssertionError: ${message}\n`) + `  ${red('- expected')} ${green('+ actual')}\n\n`
+
+  if (typeof actual === 'object' && typeof expected === 'object')
+    str += formatDiff(diffJson(actual, expected))
+  else
+    str += `${JSON.stringify(expected)} !== ${JSON.stringify(actual)}\n`
+
+  return str
 }
 
 function formatDiff(diffResults: Array<JsDiff.IDiffResult>): string {

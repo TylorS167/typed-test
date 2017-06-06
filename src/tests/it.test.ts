@@ -1,13 +1,14 @@
 import * as assert from 'assert'
 
 import { it as itTest } from './it'
+import { strip } from 'typed-colors'
 
 describe(`it`, () => {
   describe(`given a name and test function`, () => {
     it(`returns a Test`, () => {
       const test = itTest(`foo`, () => Promise.resolve(1))
 
-      assert.strictEqual(test.name, 'foo')
+      assert.strictEqual(strip(test.name), 'it foo')
       assert.ok(test.run)
     })
 
