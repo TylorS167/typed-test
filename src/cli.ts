@@ -19,7 +19,18 @@ type ParsedArgs = {
   watch: boolean
 }
 
-require('ts-node/register')
+const cwd = process.cwd()
+
+const configPath = ts.findConfigFile(cwd, (fileName: string) => fs.existsSync(fileName))
+
+const { config: { compilerOptions } } = ts.parseConfigFileTextToJson(
+  configPath,
+  fs.readFileSync(configPath).toString()
+)
+
+const { options } = ts.convertCompilerOptionsFromJson(compilerOptions, cwd)
+
+require('ts-node').register(options)
 
 const parsedArgs: ParsedArgs = yargs
   .usage(
@@ -31,7 +42,6 @@ const parsedArgs: ParsedArgs = yargs
   .option('timeout', { alias: 't' })
   .showHelpOnFail(true).argv
 
-const cwd = process.cwd()
 
 const globalTimeout = isNaN(parseFloat(parsedArgs.timeout)) ? 2000 : parseFloat(parsedArgs.timeout)
 
@@ -55,20 +65,7 @@ function run(args: ParsedArgs) {
 
 function runTest(timeout: number) {
   return function(filename: string) {
-    const contents = fs.readFileSync(filename).toString()
-
-    const configPath = ts.findConfigFile(cwd, (fileName: string) => fs.existsSync(fileName))
-
-    const { config: { compilerOptions } } = ts.parseConfigFileTextToJson(
-      configPath,
-      fs.readFileSync(configPath).toString()
-    )
-
-    const { options } = ts.convertCompilerOptionsFromJson(compilerOptions, cwd)
-
-    const source = ts.transpileModule(contents, options).outputText
-
-    const pkg = requireFromString(source, filename)
+    const pkg = require(filename)
 
     const tests: Array<Test | TestCollection> = []
 
@@ -87,12 +84,4 @@ function runTest(timeout: number) {
         .filter(Boolean)
     })
   }
-}
-
-function requireFromString(contents: string, filename: string) {
-  const newModule = new (module as any).constructor()
-
-  newModule._compile(contents, filename)
-
-  return newModule.exports
 }
