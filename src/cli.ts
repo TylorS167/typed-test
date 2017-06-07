@@ -42,7 +42,6 @@ const parsedArgs: ParsedArgs = yargs
   .option('timeout', { alias: 't' })
   .showHelpOnFail(true).argv
 
-
 const globalTimeout = isNaN(parseFloat(parsedArgs.timeout)) ? 2000 : parseFloat(parsedArgs.timeout)
 
 if (parsedArgs.help) {
