@@ -19,12 +19,12 @@ export function displayTestResults(name: string, testResults: TestResults): stri
     })
   }
 
-  return `\n` + padNewLine(str)
+  return padNewLine(str)
 }
 
 function displayResult(name: string, result: TestResult | TestResults): string {
   return isTestResult(result)
-    ? displayTestResult(name, result) + `\n`
+    ? displayTestResult(name, result)
     : displayTestResults(name, result) + `\n`
 }
 
