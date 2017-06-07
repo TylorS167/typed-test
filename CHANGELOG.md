@@ -1,3 +1,28 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/TylorS/typed-test/compare/v1.0.0...v1.1.0) (2017-06-07)
+
+
+### Bug Fixes
+
+* **cli:** remove requireFromString hack ([08788bb](https://github.com/TylorS/typed-test/commit/08788bb))
+* **displayTestResults:** improve result output ([f54af1a](https://github.com/TylorS/typed-test/commit/f54af1a))
+
+
+
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/TylorS/typed-test/compare/v0.9.0...v1.0.0) (2017-06-06)
+
+
+### Features
+
+* **assertions:** implement assertions ([9d608b4](https://github.com/TylorS/typed-test/commit/9d608b4))
+* **cli:** finish implementing cli ([2c9d08a](https://github.com/TylorS/typed-test/commit/2c9d08a))
+* **it:** implement it test ([384570c](https://github.com/TylorS/typed-test/commit/384570c))
+* **src:** start from scratch ([20cc007](https://github.com/TylorS/typed-test/commit/20cc007))
+* **test:** implement v1 ([037830b](https://github.com/TylorS/typed-test/commit/037830b))
+
+
+
 <a name="0.9.0"></a>
 # [0.9.0](https://github.com/TylorS/typed-test/compare/v0.8.0...v0.9.0) (2017-06-01)
 
