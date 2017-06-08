@@ -32,7 +32,6 @@
     "diff": "^3.2.0",
     "gaze": "^1.1.2",
     "glob-expand": "^0.2.1",
-    "ts-node": "^3.0.6",
     "typed-colors": "^1.0.0",
     "typed-figures": "^1.0.0",
     "yargs": "^8.0.1"

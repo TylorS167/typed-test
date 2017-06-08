@@ -11,6 +11,8 @@ import { displayTestResult, displayTestResults } from './displayTestResults'
 import { flatten, map } from '167'
 import { isTest, isTestCollection, isTestResult, isTestResults } from './tests'
 
+import { red } from 'typed-colors'
+
 type ParsedArgs = {
   _: Array<string>
   requires: string | Array<string>
@@ -28,15 +30,13 @@ const { config: { compilerOptions } } = ts.parseConfigFileTextToJson(
   fs.readFileSync(configPath).toString()
 )
 
-const { options } = ts.convertCompilerOptionsFromJson(compilerOptions, cwd)
-
-require('ts-node').register(options)
+const { options } = ts.convertCompilerOptionsFromJson({ ...compilerOptions, module: 'commonjs', target: 'es5' }, cwd)
 
 const parsedArgs: ParsedArgs = yargs
   .usage(
-    `\n$0 [fileGlobs]\n\n` +
-      `  --require  -r    :: Require packages before running tests\n` +
-      `  --timeout  -t    :: Set default timeout for tests`
+  `\n$0 [fileGlobs]\n\n` +
+  `  --require  -r    :: Require packages before running tests\n` +
+  `  --timeout  -t    :: Set default timeout for tests`
   )
   .option('require', { alias: 'requires', requiresArg: false })
   .option('timeout', { alias: 't' })
@@ -50,20 +50,43 @@ if (parsedArgs.help) {
   run(parsedArgs)
 }
 
+function compile(m: typeof module, filePath: string) {
+  const content = fs.readFileSync(filePath).toString()
+
+  const { outputText } = ts.transpileModule(content, { compilerOptions: { ...options } })
+
+  return (m as any)._compile(outputText, filePath)
+}
+
+let failed = false
+
 function run(args: ParsedArgs) {
   const { _: fileGlobs, requires } = args
+
+  require.extensions['.ts'] = compile
+  require.extensions['.tsx'] = compile
 
   if (requires) flatten([requires]).forEach(require)
 
   const testFiles = map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, fileGlobs))
 
+  console.time(`Tests Run In`)
   return Promise.all(testFiles.map(runTest(globalTimeout))).then(results => {
-    flatten(results).forEach(result => console.log(result))
+    return flatten(results).forEach(result => console.log(result))
   })
+    .then(() => {
+      console.timeEnd(`Tests Run In`)
+      if (failed) {
+        console.log(`\n-------------------------------------${red('Errors')}-------------------------------------\n`)
+        process.exit(1)
+      }
+      else
+        process.exit(0)
+    })
 }
 
 function runTest(timeout: number) {
-  return function(filename: string) {
+  return function (filename: string) {
     const pkg = require(filename)
 
     const tests: Array<Test | TestCollection> = []
@@ -77,6 +100,16 @@ function runTest(timeout: number) {
     return testResults.then(results => {
       return results
         .map((result, i) => {
+
+          if (result.passed === false) {
+            failed = true
+
+            process.on('exit', () => {
+              if (isTestResults(result)) console.error(displayTestResults(tests[i].name, result))
+              if (isTestResult(result)) console.error(displayTestResult(tests[i].name, result))
+            })
+          }
+
           if (isTestResults(result)) return displayTestResults(tests[i].name, result)
           if (isTestResult(result)) return displayTestResult(tests[i].name, result)
         })
