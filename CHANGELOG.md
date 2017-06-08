@@ -1,3 +1,13 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/TylorS/typed-test/compare/v1.2.0...v1.3.0) (2017-06-08)
+
+
+### Bug Fixes
+
+* **cli:** improve display of results ([624410a](https://github.com/TylorS/typed-test/commit/624410a))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/TylorS/typed-test/compare/v1.1.0...v1.2.0) (2017-06-08)
 
