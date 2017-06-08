@@ -30,13 +30,16 @@ const { config: { compilerOptions } } = ts.parseConfigFileTextToJson(
   fs.readFileSync(configPath).toString()
 )
 
-const { options } = ts.convertCompilerOptionsFromJson({ ...compilerOptions, module: 'commonjs', target: 'es5' }, cwd)
+const { options } = ts.convertCompilerOptionsFromJson(
+  { ...compilerOptions, module: 'commonjs', target: 'es5' },
+  cwd
+)
 
 const parsedArgs: ParsedArgs = yargs
   .usage(
-  `\n$0 [fileGlobs]\n\n` +
-  `  --require  -r    :: Require packages before running tests\n` +
-  `  --timeout  -t    :: Set default timeout for tests`
+    `\n$0 [fileGlobs]\n\n` +
+      `  --require  -r    :: Require packages before running tests\n` +
+      `  --timeout  -t    :: Set default timeout for tests`
   )
   .option('require', { alias: 'requires', requiresArg: false })
   .option('timeout', { alias: 't' })
@@ -71,22 +74,25 @@ function run(args: ParsedArgs) {
   const testFiles = map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, fileGlobs))
 
   console.time(`Tests Run In`)
-  return Promise.all(testFiles.map(runTest(globalTimeout))).then(results => {
-    return flatten(results).forEach(result => console.log(result))
-  })
+  return Promise.all(testFiles.map(runTest(globalTimeout)))
+    .then(results => {
+      return flatten(results).forEach(result => console.log(result))
+    })
     .then(() => {
       console.timeEnd(`Tests Run In`)
       if (failed) {
-        console.log(`\n-------------------------------------${red('Errors')}-------------------------------------\n`)
+        console.log(
+          `\n-------------------------------------${red(
+            'Errors'
+          )}-------------------------------------\n`
+        )
         process.exit(1)
-      }
-      else
-        process.exit(0)
+      } else process.exit(0)
     })
 }
 
 function runTest(timeout: number) {
-  return function (filename: string) {
+  return function(filename: string) {
     const pkg = require(filename)
 
     const tests: Array<Test | TestCollection> = []
@@ -100,7 +106,6 @@ function runTest(timeout: number) {
     return testResults.then(results => {
       return results
         .map((result, i) => {
-
           if (result.passed === false) {
             failed = true
 
