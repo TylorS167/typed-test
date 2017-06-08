@@ -37,9 +37,9 @@ const { options } = ts.convertCompilerOptionsFromJson(
 
 const parsedArgs: ParsedArgs = yargs
   .usage(
-  `\n$0 [fileGlobs]\n\n` +
-  `  --require  -r    :: Require packages before running tests\n` +
-  `  --timeout  -t    :: Set default timeout for tests`
+    `\n$0 [fileGlobs]\n\n` +
+      `  --require  -r    :: Require packages before running tests\n` +
+      `  --timeout  -t    :: Set default timeout for tests`
   )
   .option('require', { alias: 'requires', requiresArg: false })
   .option('timeout', { alias: 't' })
@@ -94,7 +94,7 @@ function run(args: ParsedArgs) {
 }
 
 function runTest(timeout: number) {
-  return function (filename: string) {
+  return function(filename: string) {
     const pkg = require(filename)
 
     const tests: Array<Test | TestCollection> = []
