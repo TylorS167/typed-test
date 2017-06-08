@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/TylorS/typed-test/compare/v1.1.0...v1.2.0) (2017-06-08)
+
+
+### Features
+
+* **cli:** improve compilation performance ([615d659](https://github.com/TylorS/typed-test/commit/615d659))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/TylorS/typed-test/compare/v1.0.0...v1.1.0) (2017-06-07)
 
