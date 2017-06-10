@@ -1,5 +1,7 @@
 # @typed/test
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/TylorS167/typed-test.svg)](https://greenkeeper.io/)
+
 > A simple test runner
 
 ## Get it
