@@ -29,7 +29,7 @@
     "validate-commit-msg": "^2.12.1"
   },
   "dependencies": {
-    "167": "^0.29.0",
+    "167": "^0.30.0",
     "diff": "^3.2.0",
     "gaze": "^1.1.2",
     "glob-expand": "^0.2.1",
