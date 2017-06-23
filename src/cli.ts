@@ -98,8 +98,10 @@ function run(args: ParsedArgs) {
 
   compile(testFiles as Array<string>)
 
-  const compiledTestFiles =
-    map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, path.join(temporaryDirectory.name, '**/*.js')))
+  const compiledTestFiles = map(
+    file => path.join(cwd, file),
+    expand({ cwd, filter: 'isFile' }, path.join(temporaryDirectory.name, '**/*.js'))
+  )
 
   console.time(`Tests Run In`)
   return Promise.all(compiledTestFiles.map(runTest(globalTimeout)))
