@@ -3,6 +3,8 @@
 import * as expand from 'glob-expand'
 import * as fs from 'fs'
 import * as path from 'path'
+import * as rimraf from 'rimraf'
+import * as tmp from 'tmp'
 import * as ts from 'typescript'
 import * as yargs from 'yargs'
 
@@ -12,6 +14,8 @@ import { flatten, map } from '167'
 import { isTest, isTestCollection, isTestResult, isTestResults } from './tests'
 
 import { red } from 'typed-colors'
+
+tmp.setGracefulCleanup()
 
 type ParsedArgs = {
   _: Array<string>
@@ -23,6 +27,8 @@ type ParsedArgs = {
 
 const cwd = process.cwd()
 
+const temporaryDirectory = tmp.dirSync({ template: '.typed-test-XXXXXX' })
+
 const configPath = ts.findConfigFile(cwd, (fileName: string) => fs.existsSync(fileName))
 
 const { config: { compilerOptions } } = ts.parseConfigFileTextToJson(
@@ -31,7 +37,14 @@ const { config: { compilerOptions } } = ts.parseConfigFileTextToJson(
 )
 
 const { options } = ts.convertCompilerOptionsFromJson(
-  { ...compilerOptions, module: 'commonjs', target: 'es5' },
+  {
+    ...compilerOptions,
+    module: 'commonjs',
+    target: 'es5',
+    noEmit: false,
+    noEmitOnError: true,
+    outDir: temporaryDirectory.name,
+  },
   cwd
 )
 
@@ -53,28 +66,43 @@ if (parsedArgs.help) {
   run(parsedArgs)
 }
 
-function compile(m: typeof module, filePath: string) {
-  const content = fs.readFileSync(filePath).toString()
-
-  const { outputText } = ts.transpileModule(content, { compilerOptions: { ...options } })
-
-  return (m as any)._compile(outputText, filePath)
-}
-
 let failed = false
+
+function compile(fileNames: Array<string>): void {
+  const program = ts.createProgram(fileNames, options)
+  const emitResult = program.emit()
+
+  const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
+
+  allDiagnostics.forEach(diagnostic => {
+    const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start)
+    const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
+
+    console.log(`${diagnostic.file.fileName}\n  (${line + 1},${character + 1}): ${message}`)
+  })
+
+  if (emitResult.emitSkipped) {
+    rimraf.sync(temporaryDirectory.name)
+    process.exit(1)
+  }
+
+  console.log(emitResult.emittedFiles)
+}
 
 function run(args: ParsedArgs) {
   const { _: fileGlobs, requires } = args
-
-  require.extensions['.ts'] = compile
-  require.extensions['.tsx'] = compile
 
   if (requires) flatten([requires]).forEach(require)
 
   const testFiles = map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, fileGlobs))
 
+  compile(testFiles as Array<string>)
+
+  const compiledTestFiles =
+    map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, path.join(temporaryDirectory.name, '**/*.js')))
+
   console.time(`Tests Run In`)
-  return Promise.all(testFiles.map(runTest(globalTimeout)))
+  return Promise.all(compiledTestFiles.map(runTest(globalTimeout)))
     .then(results => {
       return flatten(results).forEach(result => console.log(result))
     })
@@ -88,8 +116,12 @@ function run(args: ParsedArgs) {
             'Errors'
           )}-------------------------------------\n`
         )
+        rimraf.sync(temporaryDirectory.name)
         process.exit(1)
-      } else process.exit(0)
+      } else {
+        rimraf.sync(temporaryDirectory.name)
+        process.exit(0)
+      }
     })
 }
 
@@ -110,11 +142,6 @@ function runTest(timeout: number) {
         .map((result, i) => {
           if (result.passed === false) {
             failed = true
-
-            process.on('exit', () => {
-              if (isTestResults(result)) console.error(displayTestResults(tests[i].name, result))
-              if (isTestResult(result)) console.error(displayTestResult(tests[i].name, result))
-            })
           }
 
           if (isTestResults(result)) return displayTestResults(tests[i].name, result)
