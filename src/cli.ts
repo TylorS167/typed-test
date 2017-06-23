@@ -85,8 +85,6 @@ function compile(fileNames: Array<string>): void {
     rimraf.sync(temporaryDirectory.name)
     process.exit(1)
   }
-
-  console.log(emitResult.emittedFiles)
 }
 
 function run(args: ParsedArgs) {
