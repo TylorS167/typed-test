@@ -1,3 +1,13 @@
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/TylorS/typed-test/compare/v1.4.0...v1.5.0) (2017-06-23)
+
+
+### Bug Fixes
+
+* **cli:** remove console.log ([542a98a](https://github.com/TylorS/typed-test/commit/542a98a))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/TylorS/typed-test/compare/v1.3.0...v1.4.0) (2017-06-23)
 
