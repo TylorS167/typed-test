@@ -49,20 +49,23 @@ Then from your terminal
 
 ## API
 
-#### `describe(what: string, tests: Array<Test | TestCollection>): TestCollection`
+#### `describe(what: string, tests: Array<Test | TestCollection>): Test`
 
 Allows creating a collection of tests that are related to one another, useful
 for when you have many tests for a class or function.
 
-#### `given(what: string, tests: Array<Test | TestCollection>): TestCollection`
+Supports `.only` modifier to run only a particular test suite.
+
+#### `given(what: string, tests: Array<Test | TestCollection>): Test`
 
 Just like `describe`, but with a nice descriptive name for your tests to read
 like natural language.
 
+Supports `.only` modifier to run only a particular test suite.
+
 #### `it(does: string, test: (assertions: Assertions, done: Done) => any): Test`
 
-Currently the only `Test` returning function provided, which allows you to write
-your tests.
+Allows writing tests that make assertions.
 
 ```typescript
 import { it } from '@typed/test'
@@ -94,6 +97,8 @@ export const testThree =
   )
 ```
 
+Supports `.only` modifier to run only a particular test.
+
 ## Types
 
 ```typescript
@@ -101,38 +106,10 @@ export type Done = <Err extends Error>(error?: Err) => void
 
 export type TestFn = (assertions: Assertions, done: Done) => any
 
-export type TestResult = SuccessfulTestResult | FailedTestResult
-
-export interface SuccessfulTestResult {
-  readonly passed: true
-  readonly error: void
-}
-
-export interface FailedTestResult {
-  readonly passed: false
-  readonly error: Error
-}
-
 export interface Test {
-  readonly name: string
-  readonly run: (timeout: number) => Promise<TestResult>
+  only: boolean
+  run: (timeout: number) => Promise<TestResult | TestResults>
 }
-
-export interface TestCollection {
-  readonly name: string
-  readonly tests: ReadonlyArray<Test | TestCollection>
-  readonly run: (timeout: number) => Promise<TestResults>
-}
-
-export interface TestResults {
-  readonly passed: boolean
-  readonly results: Results
-}
-
-export  type Results = Record<
-  string,
-  TestResult | TestResults | ReadonlyArray<TestResult | TestResults>
->
 
 // all assertions are actually curried!
 export interface Assertions {
@@ -143,15 +120,6 @@ export interface Assertions {
   readonly rejects: <Err extends Error = Error>(promise: Promise<any>) => Promise<Err>;
   readonly same: <A>(expected: A, actual: A): A;
   readonly throws: <Err extends Error = Error>(fn: () => any): Err
-}
-
-export interface Stats {
-  count: number
-}
-
-export interface AssertionEnvironment {
-  stats: Stats
-  assertions: Assertions
 }
 
 ```

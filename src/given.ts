@@ -1,7 +1,6 @@
 import { Test } from './types'
 import { TestResults } from './results'
 import { blue } from 'typed-colors'
-import { sum } from '167'
 
 /**
  * Allows creating a descriptive suite of tests from many other tests
