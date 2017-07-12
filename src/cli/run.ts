@@ -14,7 +14,7 @@ const cwd = process.cwd()
 const TESTS_RUN_IN = `Tests run in`
 
 export async function run(args: ParsedArgs, timeout: number) {
-  if (args.requires) flatten([ args.requires ]).forEach(require)
+  if (args.requires) flatten([args.requires]).forEach(require)
 
   const testFiles = map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, args._))
 
@@ -47,9 +47,7 @@ export async function run(args: ParsedArgs, timeout: number) {
 
   console.timeEnd(TESTS_RUN_IN)
 
-  if (failed > 0)
-    process.exit(1)
+  if (failed > 0) process.exit(1)
 
   process.exit(0)
 }
-

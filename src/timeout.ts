@@ -13,11 +13,17 @@ export function timeout(ms: number, tests: Array<Test>): Test {
         const error = results.errors().trim().replace(/(\n\s\s)/g, '\n').trim()
 
         return {
-          toString() { return str },
-          errors() { return error },
-          report() { return results.report() }
+          toString() {
+            return str
+          },
+          errors() {
+            return error
+          },
+          report() {
+            return results.report()
+          },
         } as TestResults
       })
-    }
+    },
   }
 }

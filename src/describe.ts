@@ -24,12 +24,11 @@ export function describe(what: string, tests: Array<Test>): Test {
 
   const testsToRun = only ? onlyTests : tests
 
-
   return {
     only,
     run(timeout: number) {
       return run(what, testsToRun, timeout)
-    }
+    },
   }
 }
 
@@ -37,9 +36,10 @@ export namespace describe {
   export function only(what: string, tests: Array<Test>): Test {
     return { ...describe(what, tests), only: true }
   }
-} 
+}
 
 function run(what: string, tests: Array<Test>, timeout: number): Promise<TestResults> {
-  return Promise.all(tests.map(test => test.run(timeout)))
-    .then(results => new TestResults(blue(what), results))
+  return Promise.all(tests.map(test => test.run(timeout))).then(
+    results => new TestResults(blue(what), results)
+  )
 }

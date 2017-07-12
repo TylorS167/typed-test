@@ -38,7 +38,7 @@ export namespace it {
       only: true,
       run(timeout: number) {
         return run(does, test, timeout)
-      }
+      },
     }
   }
 }

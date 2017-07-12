@@ -30,7 +30,7 @@ export function given(what: string, tests: Array<Test>): Test {
     only,
     run(timeout: number) {
       return run(what, testsToRun, timeout)
-    }
+    },
   }
 }
 
@@ -38,11 +38,12 @@ export namespace given {
   export function only(what: string, tests: Array<Test>): Test {
     return { ...given(what, tests), only: true }
   }
-} 
+}
 
 function run(what: string, tests: Array<Test>, timeout: number): Promise<TestResults> {
   const name = `${blue('given')} ${what}`
 
-  return Promise.all(tests.map(test => test.run(timeout)))
-    .then(results => new TestResults(name, results))
+  return Promise.all(tests.map(test => test.run(timeout))).then(
+    results => new TestResults(name, results)
+  )
 }

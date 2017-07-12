@@ -15,7 +15,7 @@ export class TestResult {
   }
 
   public toString(): string {
-    return this.passed 
+    return this.passed
       ? `\n${green(tick)} ${this.name}`
       : `\n${red(cross)} ${this.name}\n  ${errorToString(this.error)}`
   }
@@ -24,12 +24,12 @@ export class TestResult {
     return this.passed ? '' : this.toString()
   }
 
-  public report(): { passed: number, failed: number } {
+  public report(): { passed: number; failed: number } {
     const { passed } = this
 
     return {
       passed: passed ? 1 : 0,
-      failed: passed ? 0 : 1
+      failed: passed ? 0 : 1,
     }
   }
 }

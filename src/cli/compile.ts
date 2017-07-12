@@ -45,8 +45,7 @@ export function compile(fileNames: ReadonlyArray<string>): ReadonlyArray<string>
     console.log(`${diagnostic.file.fileName}\n  (${line + 1},${character + 1}): ${message}`)
   })
 
-  if (emitResult.emitSkipped)
-    process.exit(1)
+  if (emitResult.emitSkipped) process.exit(1)
 
   return map(
     file => path.join(cwd, file),
