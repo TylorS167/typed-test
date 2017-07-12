@@ -30,14 +30,14 @@
     "validate-commit-msg": "^2.12.1"
   },
   "dependencies": {
-    "167": "^0.35.0",
-    "assertion-error-diff": "^1.0.0",
-    "glob-expand": "^0.2.1",
-    "rimraf": "^2.6.1",
+    "167": "0.35.0",
+    "assertion-error-diff": "1.0.0",
+    "glob-expand": "0.2.1",
+    "rimraf": "2.6.1",
     "tmp": "0.0.31",
-    "typed-colors": "^1.0.0",
-    "typed-figures": "^1.0.0",
-    "yargs": "^8.0.1"
+    "typed-colors": "1.0.0",
+    "typed-figures": "1.0.0",
+    "yargs": "^8.0.2"
   },
   "lint-staged": {
     "*.ts": [
