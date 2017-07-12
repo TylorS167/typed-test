@@ -1,2 +1,6 @@
 export * from './types'
-export { describe, given, it, timeout } from './tests'
+export * from './describe'
+export * from './given'
+export * from './it'
+export * from './timeout'
+export * from './results'
