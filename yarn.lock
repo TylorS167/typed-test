@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"167@^0.29.0":
-  version "0.29.0"
-  resolved "https://registry.yarnpkg.com/167/-/167-0.29.0.tgz#f2b0c4a332467ba68cfc2bb875aaa803013d20f7"
+"167@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/167/-/167-0.30.0.tgz#8e571e64851bebe8dced5723b48a07ab297b5b9b"
 
-"@types/diff@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@types/diff/-/diff-3.2.0.tgz#2cf019a98b4cca072102cb48af5675502b5a831f"
+"167@^0.35.0":
+  version "0.35.0"
+  resolved "https://registry.yarnpkg.com/167/-/167-0.35.0.tgz#b82c89a4732505c920b4b041a2fdc9da62b1a07d"
 
 "@types/glob-expand@0.0.30":
   version "0.0.30"
@@ -117,6 +117,14 @@ array-ify@^1.0.0:
 arrify@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
+
+assertion-error-diff@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/assertion-error-diff/-/assertion-error-diff-1.0.0.tgz#5462fe1ff70849bfec25d108aecee5d95b86d8e5"
+  dependencies:
+    "167" "^0.30.0"
+    typed-colors "^1.0.0"
+    typed-figures "^1.0.0"
 
 async@^1.4.0:
   version "1.5.2"
@@ -472,7 +480,7 @@ diff@3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.2.0.tgz#c9ce393a4b7cbd0b058a725c93df299027868ff9"
 
-diff@^3.1.0, diff@^3.2.0:
+diff@^3.1.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.3.0.tgz#056695150d7aa93237ca7e378ac3b1682b7963b9"
 
@@ -563,12 +571,6 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
-gaze@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/gaze/-/gaze-1.1.2.tgz#847224677adb8870d679257ed3388fdb61e40105"
-  dependencies:
-    globule "^1.0.0"
-
 get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
@@ -650,7 +652,7 @@ glob@7.1.1:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.5, glob@~7.1.1:
+glob@^7.0.5:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -669,14 +671,6 @@ glob@~4.5.x:
     inherits "2"
     minimatch "^2.0.1"
     once "^1.3.0"
-
-globule@^1.0.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/globule/-/globule-1.2.0.tgz#1dc49c6822dd9e8a2fa00ba2a295006e8664bd09"
-  dependencies:
-    glob "~7.1.1"
-    lodash "~4.17.4"
-    minimatch "~3.0.2"
 
 graceful-fs@^4.1.2:
   version "4.1.11"
@@ -1016,7 +1010,7 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "~3.0.0"
 
-lodash@^4.0.0, lodash@^4.1.0, lodash@^4.2.1, lodash@~4.17.4:
+lodash@^4.0.0, lodash@^4.1.0, lodash@^4.2.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -1094,7 +1088,7 @@ minimatch@^2.0.1:
   dependencies:
     brace-expansion "^1.0.0"
 
-minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.4, minimatch@~3.0.2:
+minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   dependencies:

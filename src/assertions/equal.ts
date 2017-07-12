@@ -1,10 +1,10 @@
 import { curry2, equals } from '167'
 
-import { AssertionError } from './AssertionError'
+import { createAssertionError } from 'assertion-error-diff'
 
 export const equal: Equal = curry2(function<A>(expected: A, actual: A): A {
   if (!equals(expected, actual))
-    throw new AssertionError(`Expected value is not equal to actual value`, expected, actual, equal)
+    throw createAssertionError(`Expected value is not equal to actual value`, expected, actual)
 
   return actual
 })

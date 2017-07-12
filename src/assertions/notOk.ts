@@ -1,7 +1,7 @@
-import { AssertionError } from './AssertionError'
+import { createAssertionError } from 'assertion-error-diff'
 
 export function notOk(actual: boolean): boolean {
   if (!actual) return actual
 
-  throw new AssertionError(`Value is truthy`, true, actual, notOk)
+  throw createAssertionError(`Value is truthy`, true, actual)
 }
