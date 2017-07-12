@@ -14,7 +14,6 @@
   "author": "Tylor Steinberger <tlsteinberger167@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/diff": "^3.2.0",
     "@types/glob-expand": "0.0.30",
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.27",
@@ -32,8 +31,6 @@
   },
   "dependencies": {
     "167": "^0.29.0",
-    "diff": "^3.2.0",
-    "gaze": "^1.1.2",
     "glob-expand": "^0.2.1",
     "rimraf": "^2.6.1",
     "tmp": "0.0.31",
@@ -42,13 +39,13 @@
     "yargs": "^8.0.1"
   },
   "lint-staged": {
-    ".ts": [
+    "*.ts": [
       "prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote --trailing-comma es5 --parser typescript",
       "git add"
     ]
   },
   "scripts": {
-    "build": "npm run build:commonjs && npm run build:es2015 && chmod +x lib/cli.js",
+    "build": "yarn build:commonjs && yarn build:es2015 && chmod +x lib/cli.js",
     "build:commonjs": "tsc -P .config/tsconfig.commonjs.json",
     "build:es2015": "tsc -P .config/tsconfig.es2015.json",
     "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0 -p angular",
@@ -56,11 +53,11 @@
     "commit": "git-cz",
     "commitmsg": "validate-commit-msg",
     "postchangelog": "git add CHANGELOG.md && git commit -m 'docs(CHANGELOG): amend changelog'",
-    "postversion": "npm run changelog && git push origin master --tags && npm publish",
-    "preversion": "npm test && npm run build",
+    "postversion": "yarn changelog && git push origin master --tags && npm publish",
+    "preversion": "npm test && yarn build",
     "release:major": "npm version major -m 'chore(package): v%s'",
     "release:minor": "npm version minor -m 'chore(package): v%s'",
-    "test": "npm run test:lint && npm run test:unit",
+    "test": "yarn test:lint && yarn test:unit",
     "test:lint": "prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote --trailing-comma es5 --parser typescript 'src/*.ts' 'src/**/*.ts'",
     "test:unit": "mocha -r ts-node/register 'src/*.test.ts' 'src/**/*.test.ts'"
   }
