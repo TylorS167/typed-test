@@ -99,6 +99,22 @@ export const testThree =
 
 Supports `.only` modifier to run only a particular test.
 
+#### `timeout(ms: number, tests: Array<Test>): Test`
+
+Allows specifying how long asynchronous tests should run before failing.
+
+```typescript
+import { timeout, describe, it } from '@typed/test'
+
+export const testOne = timeout(500, [
+  describe(`Foo`, [ ... ])
+])
+
+export const testTwo = timeout(10, [
+  it('does stuff', ({ ok }) => { ... })
+])
+```
+
 ## Types
 
 ```typescript
