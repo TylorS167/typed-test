@@ -139,4 +139,22 @@ export const test: Test = describe(`it`, [
       equal(0, passed)
     }),
   ]),
+
+  given(`what it does and a test function that throws`, [
+    it(`returns the correct error message`, async ({ ok }) => {
+      const x = 1
+
+      const test: Test = it('does stuff', assert => {
+        if (x === 1) throw new Error('What the heck!')
+
+        assert.equal(1, 1)
+      })
+
+      const result = await test.run(5)
+
+      const errorString = result.errors()
+
+      ok(errorString.indexOf(`What the heck!`) > -1)
+    }),
+  ]),
 ])

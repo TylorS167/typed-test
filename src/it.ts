@@ -54,9 +54,11 @@ function run(does: string, test: TestFn, timeout: number): Promise<TestResult> {
     const done: Done = (error?: Error) => {
       if (id) clearTimeout(id)
 
+      if (error) return resolve(new TestResult(name, error))
+
       return stats.count === 0
         ? resolve(new TestResult(name, new Error('No assertions used')))
-        : resolve(new TestResult(name, error))
+        : resolve(new TestResult(name, null))
     }
 
     if (test.length === 0) return done()
