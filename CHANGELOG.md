@@ -1,3 +1,13 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/TylorS/typed-test/compare/v2.0.0...v2.1.0) (2017-07-18)
+
+
+### Bug Fixes
+
+* **it:** ensure the correct error message is shown ([8323ffd](https://github.com/TylorS/typed-test/commit/8323ffd))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/TylorS/typed-test/compare/v1.5.0...v2.0.0) (2017-07-12)
 
