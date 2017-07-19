@@ -1,3 +1,8 @@
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/TylorS/typed-test/compare/v2.1.0...v2.2.0) (2017-07-19)
+
+
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/TylorS/typed-test/compare/v2.0.0...v2.1.0) (2017-07-18)
 
