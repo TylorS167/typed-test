@@ -4,8 +4,8 @@ import * as path from 'path'
 import { flatten, map, range } from '167'
 import { green, red } from 'typed-colors'
 
-import { ParsedArgs } from './types'
-import { TestResults } from '../results'
+import { ParsedArgs } from '../types'
+import { TestResults } from '../../results'
 import { compile } from './compile'
 import { findTests } from './findTests'
 

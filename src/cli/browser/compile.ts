@@ -1,11 +1,10 @@
 import * as expand from 'glob-expand'
 import * as fs from 'fs'
 import * as path from 'path'
-import * as rimraf from 'rimraf'
 import * as ts from 'typescript'
 
 import { map } from '167'
-import { tempDir } from './tempDir'
+import { tempDir } from '../tempDir'
 
 const cwd = process.cwd()
 
@@ -28,11 +27,9 @@ const { options } = ts.convertCompilerOptionsFromJson(
   cwd
 )
 
-process.on('exit', () => {
-  rimraf.sync(tempDir.name)
-})
-
 export function compile(fileNames: ReadonlyArray<string>): ReadonlyArray<string> {
+  console.log('Compiling tests with TypeScript compiler...')
+
   const program = ts.createProgram(fileNames.slice(), options)
   const emitResult = program.emit()
 

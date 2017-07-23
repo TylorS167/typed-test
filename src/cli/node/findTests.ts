@@ -1,4 +1,4 @@
-import { Test } from '../types'
+import { Test } from '../../types'
 
 export function findTests(filenames: ReadonlyArray<string>): ReadonlyArray<Test> {
   const onlyTests: Array<Test> = []

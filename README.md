@@ -45,6 +45,14 @@ Then from your terminal
 
 # supports globs
 ./node_modules/.bin/typed-test *.test.ts
+
+# supports running in a browser (defaults to chrome)
+# So far only tested on Mac OS with Google Chrome and Safari
+./node_modules/.bin/typed-test --browser *.test.ts
+
+# Browser can be changed by setting the BROWSER environment variable
+# Supported browsers any supported by james-browser-launcher 
+BROWSER=safari ./node_modules/.bin/typed-test --browser *.test.ts
 ```
 
 ## API
