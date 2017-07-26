@@ -18,7 +18,7 @@ export function findTests(filenames: ReadonlyArray<string>): ReadonlyArray<strin
     for (const key in pkg) if (isTest(pkg[key])) add(pkg[key], filename)
   }
 
-  return onlyTests.length === 0 ? tests : onlyTests
+  return Array.from(new Set(onlyTests.length === 0 ? tests : onlyTests))
 }
 
 function isTest(x: any): x is Test {
