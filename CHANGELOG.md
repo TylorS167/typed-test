@@ -1,3 +1,13 @@
+<a name="2.5.0"></a>
+# [2.5.0](https://github.com/TylorS/typed-test/compare/v2.4.0...v2.5.0) (2017-08-06)
+
+
+### Features
+
+* **cli/browser:** implements sending log messages back to node console ([ef9a657](https://github.com/TylorS/typed-test/commit/ef9a657))
+
+
+
 <a name="2.4.0"></a>
 # [2.4.0](https://github.com/TylorS/typed-test/compare/v2.3.0...v2.4.0) (2017-07-26)
 
