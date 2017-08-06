@@ -8,6 +8,16 @@ export function createHtmlFile(testRequirePaths: ReadonlyArray<string>, timeout:
       <div id="container"></div>
       <script src="./bundle.js"></script>
       <script>
+        const log = console.log
+        console.log = function (...args) {
+          log.apply(console, args)
+          fetch(location.origin + '/log', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+            body: JSON.stringify(args.map(JSON.stringify))
+          })
+        }
+
         var tests = []
         var TypedTest = require('@typed/test')
 
