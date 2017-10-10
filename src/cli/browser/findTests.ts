@@ -1,13 +1,16 @@
 import { Test } from '../../types'
 
-export function findTests(filenames: ReadonlyArray<string>): ReadonlyArray<string> {
+export function findTests(filenames: ReadonlyArray<string>): Array<string> {
   const onlyTests: Array<string> = []
   const tests: Array<string> = []
 
   function add(test: Test, filename: string) {
-    if (test.only) {
-      onlyTests.push(filename)
-    } else tests.push(filename)
+    const { only } = test
+
+    if (only)
+      return onlyTests.push(filename)
+
+    tests.push(filename)
   }
 
   for (const filename of filenames) {

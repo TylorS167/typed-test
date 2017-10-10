@@ -20,12 +20,11 @@ const cwd = process.cwd()
 const browserLauncher = require('james-browser-launcher')
 
 export async function run(args: ParsedArgs, timeout: number) {
+  const bundlePath = path.join(tempDir.name, './bundle.js')
   const testFiles = map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, args._))
-
   const compiledTestFilePaths = findTests(compile(testFiles))
-
-  const bundler = browserify(compiledTestFilePaths)
-
+  const browserifyOptions = require(path.join(cwd, 'package.json'))['browserify'] || {}
+  const bundler = browserify(compiledTestFilePaths, browserifyOptions)
   const typedTest =
     process.cwd() === path.join(__dirname, '../../..')
       ? path.join(tempDir.name, 'index.js')
@@ -35,7 +34,7 @@ export async function run(args: ParsedArgs, timeout: number) {
 
   compiledTestFilePaths.forEach(name => bundler.require(name))
 
-  await createBundle(bundler)
+  await createBundle(bundler, bundlePath)
 
   fs.writeFileSync(
     path.join(tempDir.name, 'index.html'),
@@ -116,14 +115,14 @@ function handleLog(request: express.Request & { body: any }, response: express.R
   response.send()
 }
 
-async function createBundle(bundler: browserify.BrowserifyObject) {
+async function createBundle(bundler: browserify.BrowserifyObject, filePath: string) {
   return new Promise((resolve, reject) => {
     console.log('Bundling your test files for the browser...')
     bundler.bundle((err: any, src: Buffer) => {
       if (err) return reject(err)
 
       try {
-        fs.writeFileSync(path.join(tempDir.name, './bundle.js'), src)
+        fs.writeFileSync(filePath, src)
         resolve(src)
       } catch (e) {
         reject(e)
