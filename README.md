@@ -46,6 +46,12 @@ Then from your terminal
 # supports globs
 ./node_modules/.bin/typed-test *.test.ts
 
+# supports adding requires before running your tests
+./node_modules/.bin/typed-test -r jsdom-global/register src/**/*.test.ts
+
+# Customize how long timeouts default to (defaults to 2000 ms)
+./node_modules/.bin/typed-test --timeout 5000 src/**/*.test.ts
+
 # supports running in a browser (defaults to chrome)
 # So far only tested on Mac OS with Google Chrome, Safari, and Firefox.
 ./node_modules/.bin/typed-test --browser *.test.ts
@@ -55,10 +61,15 @@ Then from your terminal
 BROWSER=safari ./node_modules/.bin/typed-test --browser *.test.ts
 ```
 
+## TypeScript Support
+
+TypeScript support is built-in and assumed. Your `tsconfig.json` should be
+detected without any configuration and your tests will be compiled automatically.
+
 ## Browserify Configuration
 
 Currently, browserify is used to bundle your tests to run in a browser. To configure
-how browserify works all [browserify options](https://github.com/browserify/browserify#browserifyfiles--opts) 
+how browserify works all [browserify options](https://github.com/browserify/browserify#browserifyfiles--opts)
 can be added to a `browserify` field in your `package.json`.
 
 ```json
