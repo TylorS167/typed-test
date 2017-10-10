@@ -1,3 +1,13 @@
+<a name="2.6.0"></a>
+# [2.6.0](https://github.com/TylorS/typed-test/compare/v2.5.0...v2.6.0) (2017-10-10)
+
+
+### Features
+
+* allow configuring browserify from package.json for browser testing ([54261e4](https://github.com/TylorS/typed-test/commit/54261e4))
+
+
+
 <a name="2.5.0"></a>
 # [2.5.0](https://github.com/TylorS/typed-test/compare/v2.4.0...v2.5.0) (2017-08-06)
 
