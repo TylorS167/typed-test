@@ -26,8 +26,15 @@ export function timeout(ms: number, tests: Array<Test>): Test {
     ...test,
     run() {
       return test.run(ms).then((results: TestResults) => {
-        const str = results.toString().replace(/(\n\s\s)/g, '\n').trim()
-        const error = results.errors().trim().replace(/(\n\s\s)/g, '\n').trim()
+        const str = results
+          .toString()
+          .replace(/(\n\s\s)/g, '\n')
+          .trim()
+        const error = results
+          .errors()
+          .trim()
+          .replace(/(\n\s\s)/g, '\n')
+          .trim()
 
         return {
           toString() {

@@ -91,7 +91,10 @@ function handleEndServer(request: express.Request, response: express.Response) {
   const passed = parseFloat(body['passed'])
 
   console.log(
-    body['toString'].replace(/âœ”/g, tick).replace(/âœ/g, cross + ' ').replace(/(\n)/, '\n  ')
+    body['toString']
+      .replace(/âœ”/g, tick)
+      .replace(/âœ/g, cross + ' ')
+      .replace(/(\n)/, '\n  ')
   )
 
   if (failed > 0) {

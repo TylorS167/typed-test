@@ -7,8 +7,7 @@ export function findTests(filenames: ReadonlyArray<string>): Array<string> {
   function add(test: Test, filename: string) {
     const { only } = test
 
-    if (only)
-      return onlyTests.push(filename)
+    if (only) return onlyTests.push(filename)
 
     tests.push(filename)
   }
