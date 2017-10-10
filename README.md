@@ -47,12 +47,28 @@ Then from your terminal
 ./node_modules/.bin/typed-test *.test.ts
 
 # supports running in a browser (defaults to chrome)
-# So far only tested on Mac OS with Google Chrome and Safari
+# So far only tested on Mac OS with Google Chrome, Safari, and Firefox.
 ./node_modules/.bin/typed-test --browser *.test.ts
 
 # Browser can be changed by setting the BROWSER environment variable
-# Supported browsers any supported by james-browser-launcher 
+# Supports any browser supported by james-browser-launcher 
 BROWSER=safari ./node_modules/.bin/typed-test --browser *.test.ts
+```
+
+## Browserify Configuration
+
+Currently, browserify is used to bundle your tests to run in a browser. To configure
+how browserify works all [browserify options](https://github.com/browserify/browserify#browserifyfiles--opts) 
+can be added to a `browserify` field in your `package.json`.
+
+```json
+{
+  "browserify": {
+    "plugin": [
+      ...
+    ]
+  }
+}
 ```
 
 ## API
