@@ -1,3 +1,13 @@
+<a name="3.4.0"></a>
+# [3.4.0](https://github.com/TylorS/typed-test/compare/v3.3.0...v3.4.0) (2017-10-11)
+
+
+### Bug Fixes
+
+* ensure config is found correctly ([a94da35](https://github.com/TylorS/typed-test/commit/a94da35))
+
+
+
 <a name="3.3.0"></a>
 # [3.3.0](https://github.com/TylorS/typed-test/compare/v3.2.0...v3.3.0) (2017-10-11)
 
