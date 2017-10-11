@@ -1,34 +1,14 @@
 import * as expand from 'glob-expand'
-import * as fs from 'fs'
 import * as path from 'path'
 import * as ts from 'typescript'
 
 import { map } from '167'
+import { options } from '../options'
 import { resolveAliases } from '../resolveAliases'
 import { tempDir } from '../tempDir'
 
 const moduleAlias = require('module-alias')
-
 const cwd = process.cwd()
-
-const configPath = ts.findConfigFile(cwd, (fileName: string) => fs.existsSync(fileName))
-
-const { config: { compilerOptions } } = ts.parseConfigFileTextToJson(
-  configPath,
-  fs.readFileSync(configPath).toString()
-)
-
-const { options } = ts.convertCompilerOptionsFromJson(
-  {
-    ...compilerOptions,
-    module: 'commonjs',
-    target: 'es5',
-    noEmit: false,
-    noEmitOnError: true,
-    outDir: tempDir.name,
-  },
-  cwd
-)
 
 export function compile(fileNames: ReadonlyArray<string>): ReadonlyArray<string> {
   const { paths = {}, baseUrl = '' } = options

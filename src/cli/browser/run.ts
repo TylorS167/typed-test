@@ -9,7 +9,7 @@ import { green, red } from 'typed-colors'
 
 import { ParsedArgs } from '../types'
 import { defaultConfig } from './defaultConfig'
-import { options } from './options'
+import { options } from '../options'
 import { resolveAliases } from '../resolveAliases'
 import { tempDir } from '../tempDir'
 

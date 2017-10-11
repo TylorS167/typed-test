@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import * as ts from 'typescript'
 
 import { join } from 'path'
-import { tempDir } from '../tempDir'
+import { tempDir } from './tempDir'
 
 const cwd = process.cwd()
 
@@ -15,6 +15,7 @@ export const CONFIG_PATH = join(cwd, tempDir.name, 'tsconfig.json')
 
 const updatedCompilerOptions = {
   ...compilerOptions,
+  declaration: false,
   module: 'commonjs',
   target: 'es5',
   noEmit: false,
