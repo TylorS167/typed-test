@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": [
+      "dom",
       "es5",
       "es2015"
     ],
@@ -10,9 +11,16 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "noUnusedParameters": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "baseUrl": "./",
+    "paths": {
+      "@base/*": [
+        "./src/*"
+      ]
+    }
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "test/**/*ts"
   ]
 }

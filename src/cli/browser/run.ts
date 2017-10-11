@@ -1,83 +1,112 @@
 import * as bodyParser from 'body-parser'
-import * as browserify from 'browserify'
 import * as expand from 'glob-expand'
 import * as express from 'express'
-import * as fs from 'fs'
 import * as path from 'path'
 
 import { cross, tick } from 'typed-figures'
+import { fromPairs, keys, length, map } from '167'
 import { green, red } from 'typed-colors'
 
 import { ParsedArgs } from '../types'
-import { compile } from './compile'
-import { createHtmlFile } from './createHtmlFile'
-import { findTests } from './findTests'
-import { map } from '167'
+import { defaultConfig } from './defaultConfig'
+import { options } from './options'
+import { resolveAliases } from '../resolveAliases'
 import { tempDir } from '../tempDir'
 
+const { paths, baseUrl } = options
 const cwd = process.cwd()
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 7677
 
+const Webpack = require('webpack')
+const webpackMerge = require('webpack-merge')
 const browserLauncher = require('james-browser-launcher')
 
 export async function run(args: ParsedArgs, timeout: number) {
-  const bundlePath = path.join(tempDir.name, './bundle.js')
+  const config = webpackMerge(
+    defaultConfig,
+    typeof args.config === 'string' ? require(path.join(cwd, args.config)) : {}
+  )
   const testFiles = map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, args._))
-  const compiledTestFilePaths = findTests(compile(testFiles))
-  const browserifyOptions = require(path.join(cwd, 'package.json'))['browserify'] || {}
-  const bundler = browserify(compiledTestFilePaths, browserifyOptions)
-  const typedTest =
-    process.cwd() === path.join(__dirname, '../../..')
-      ? path.join(tempDir.name, 'index.js')
-      : '@typed/test'
-
-  bundler.require(typedTest, { expose: '@typed/test' })
-
-  compiledTestFilePaths.forEach(name => bundler.require(name))
-
-  await createBundle(bundler, bundlePath)
-
-  fs.writeFileSync(
-    path.join(tempDir.name, 'index.html'),
-    createHtmlFile(compiledTestFilePaths, timeout)
+  const entries: Array<[string, string]> = [
+    ...map((file, i): [string, string] => [`test${i}`, file], testFiles),
+    [`bundle`, path.join(__dirname, 'test-bundle.js')]
+  ]
+  const aliases = map(
+    ([aliasName, path]): [string, string] => [aliasName, path.replace('/' + tempDir.name, '')],
+    resolveAliases(testFiles, paths, baseUrl)
   )
 
+  config.entry = fromPairs(entries)
+  config.plugins.push(new Webpack.DefinePlugin({ TIMEOUT: timeout }))
+
+  if (length(keys(config.resolve.alias)) === 0)
+    Object.assign(config.resolve.alias, fromPairs(aliases))
+
+  const compiler = Webpack(config)
+  const server = createServer()
+
+  console.log('Bundling tests with webpack...')
+  compiler.run((err: any, stats: any) => {
+    logErrors(err, stats)
+
+    server.listen(PORT, '0.0.0.0', async () => {
+      console.log(`Test server running on port ${PORT}`)
+
+      launchBrowser()
+    })
+  })
+}
+
+function logErrors(err: any, stats: any) {
+  if (err) {
+    console.log(err)
+
+    process.exit(1)
+  }
+
+  const { errors } = stats.toJson()
+
+  if (stats.hasErrors()) {
+    errors.forEach(console.error)
+
+    process.exit(1)
+  }
+}
+
+function createServer() {
   const server = express()
 
   server.use(express.static(tempDir.name))
   server.use(bodyParser.json())
 
   server.post('/log', handleLog)
-
   server.post('/end-server', handleEndServer)
 
-  const PORT = 42167
+  return server
+}
 
-  server.listen(PORT, '0.0.0.0', () => {
-    console.log(`Test server running on port ${PORT}`)
+function launchBrowser() {
+  const url = `http://localhost:${PORT}`
 
+  return new Promise((resolve, reject) => {
     browserLauncher((err: Error, launch: any) => {
-      if (err) {
-        console.error(err.stack)
-        process.exit(1)
-      }
+      if (err) return reject(err)
 
       launch(
-        `http://localhost:${PORT}`,
+        url,
         {
           browser: process.env.BROWSER || 'chrome',
-          options: [`--disable-gpu`],
+          options: [`--disable-gpu`]
         },
         (error: Error, instance: any) => {
           process.on('exit', () => {
             instance.stop()
           })
 
-          if (error) {
-            console.error(error.stack)
-            process.exit(1)
-          }
+          if (error) return reject(error)
 
           console.log('Browser started with PID:', instance.pid)
+          resolve()
         }
       )
     })
@@ -85,10 +114,15 @@ export async function run(args: ParsedArgs, timeout: number) {
 }
 
 function handleEndServer(request: express.Request, response: express.Response) {
+  response.send()
+
   const { body } = request
 
   const failed = parseFloat(body['failed'])
   const passed = parseFloat(body['passed'])
+
+  console.log()
+  console.log('@typed/test -- ' + Date())
 
   console.log(
     body['toString']
@@ -97,39 +131,21 @@ function handleEndServer(request: express.Request, response: express.Response) {
       .replace(/(\n)/, '\n  ')
   )
 
-  if (failed > 0) {
-    console.log()
-    console.error(`------------------------------------Errors------------------------------------`)
-    console.error('  ' + body['errors'].replace(/âœ/g, cross + ' '))
-  }
-
   console.log()
   console.log(`${red(String(failed))} Failed`)
   console.log(`${green(String(passed))} Passed`)
+  console.log()
 
-  response.send()
+  if (failed > 0) {
+    console.error(`------------------------------------Errors------------------------------------`)
+    console.error('  ' + body['errors'].replace(/âœ/g, cross + ' '))
+  }
 
   process.exit(failed)
 }
 
 function handleLog(request: express.Request & { body: any }, response: express.Response) {
-  console.log(JSON.parse(request.body))
+  console.log(request.body)
 
   response.send()
-}
-
-async function createBundle(bundler: browserify.BrowserifyObject, filePath: string) {
-  return new Promise((resolve, reject) => {
-    console.log('Bundling your test files for the browser...')
-    bundler.bundle((err: any, src: Buffer) => {
-      if (err) return reject(err)
-
-      try {
-        fs.writeFileSync(filePath, src)
-        resolve(src)
-      } catch (e) {
-        reject(e)
-      }
-    })
-  })
 }

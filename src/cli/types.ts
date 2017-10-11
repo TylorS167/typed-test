@@ -4,5 +4,5 @@ export type ParsedArgs = {
   requires: string | Array<string>
   help: boolean
   timeout: string
-  watch: boolean
+  config: string
 }

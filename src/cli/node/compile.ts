@@ -3,6 +3,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as ts from 'typescript'
 
+import { configureAliases } from '../configureAliases'
 import { map } from '167'
 import { tempDir } from '../tempDir'
 
@@ -28,6 +29,10 @@ const { options } = ts.convertCompilerOptionsFromJson(
 )
 
 export function compile(fileNames: ReadonlyArray<string>): ReadonlyArray<string> {
+  const { paths, baseUrl } = options
+
+  configureAliases(fileNames, paths, baseUrl)
+
   const program = ts.createProgram(fileNames.slice(), options)
   const emitResult = program.emit()
 
