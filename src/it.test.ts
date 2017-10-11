@@ -1,4 +1,7 @@
-import { Test, describe, given, it } from './'
+import { Test } from '@base/types'
+import { describe } from '@base/describe'
+import { given } from '@base/given'
+import { it } from '@base/it'
 
 const TIMEOUT_MS = 100
 

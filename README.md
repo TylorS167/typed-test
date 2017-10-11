@@ -66,21 +66,12 @@ BROWSER=safari ./node_modules/.bin/typed-test --browser *.test.ts
 TypeScript support is built-in and assumed. Your `tsconfig.json` should be
 detected without any configuration and your tests will be compiled automatically.
 
-## Browserify Configuration
+## Webpack Configuration
 
-Currently, browserify is used to bundle your tests to run in a browser. To configure
-how browserify works all [browserify options](https://github.com/browserify/browserify#browserifyfiles--opts)
-can be added to a `browserify` field in your `package.json`.
-
-```json
-{
-  "browserify": {
-    "plugin": [
-      ...
-    ]
-  }
-}
-```
+If you are running your tests in a browser with the `--browser` CLI flag, it may
+sometimes be necessary to provide a webpack configuration file to use. The
+`--config` flag followed by a relative path to a webpack configuration file, this 
+configuration will be merged with the default configuration using [`webpack-merge`](https://github.com/survivejs/webpack-merge).
 
 ## API
 
