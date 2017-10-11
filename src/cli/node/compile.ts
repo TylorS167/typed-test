@@ -35,8 +35,7 @@ export function compile(fileNames: ReadonlyArray<string>): ReadonlyArray<string>
 
   const aliases = resolveAliases(fileNames, paths, baseUrl)
 
-  for (const [alias, aliasPath] of aliases)
-    moduleAlias.addAlias(alias, aliasPath)
+  for (const [alias, aliasPath] of aliases) moduleAlias.addAlias(alias, aliasPath)
 
   const program = ts.createProgram(fileNames.slice(), options)
   const emitResult = program.emit()
