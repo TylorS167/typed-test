@@ -1,3 +1,13 @@
+<a name="3.2.0"></a>
+# [3.2.0](https://github.com/TylorS/typed-test/compare/v3.1.0...v3.2.0) (2017-10-11)
+
+
+### Bug Fixes
+
+* return early if there are no aliases ([11099ab](https://github.com/TylorS/typed-test/commit/11099ab))
+
+
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/TylorS/typed-test/compare/v3.0.0...v3.1.0) (2017-10-11)
 
