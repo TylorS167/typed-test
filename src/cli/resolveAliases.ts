@@ -26,9 +26,11 @@ function resolveAlias(
   rootFolders: ReadonlyArray<string>,
   baseUrl: string
 ) {
+  const pathCount = keys(paths).length
+
   return function(alias: string) {
     return map(
-      pipe(stripExtraCharacters, modifyPath(rootFolders, baseUrl), (path: string): [
+      pipe(stripExtraCharacters, modifyPath(pathCount, rootFolders, baseUrl), (path: string): [
         string,
         string
       ] => [stripExtraCharacters(alias), join(cwd, tempDir.name, path)]),
@@ -44,14 +46,15 @@ function stripExtraCharacters(str: string): string {
     .replace(/\/$/, '')
 }
 
-function modifyPath(rootFolders: ReadonlyArray<string>, baseUrl: string) {
+function modifyPath(pathCount: number, rootFolders: ReadonlyArray<string>, baseUrl: string) {
   return function(path: string): string {
     if (isBasePath(path)) return relative(cwd, baseUrl)
 
     const folderIndex = rootFolders.indexOf(path)
-    const shouldReplaceFolderPath = folderIndex > -1
+    const shouldReplaceFolderPath = folderIndex > -1 || pathCount <= 1
 
     if (isMultipleCompiledFolders(rootFolders) || !shouldReplaceFolderPath) return path
+    if (pathCount > 1) return path
 
     return path.replace(rootFolders[folderIndex], '')
   }
