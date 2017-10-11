@@ -1,3 +1,8 @@
+<a name="3.5.0"></a>
+# [3.5.0](https://github.com/TylorS/typed-test/compare/v3.4.0...v3.5.0) (2017-10-11)
+
+
+
 <a name="3.4.0"></a>
 # [3.4.0](https://github.com/TylorS/typed-test/compare/v3.3.0...v3.4.0) (2017-10-11)
 
