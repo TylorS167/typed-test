@@ -1,3 +1,13 @@
+<a name="3.6.0"></a>
+# [3.6.0](https://github.com/TylorS/typed-test/compare/v3.5.0...v3.6.0) (2017-10-11)
+
+
+### Bug Fixes
+
+* ensure declarations are not generated ([ba09444](https://github.com/TylorS/typed-test/commit/ba09444))
+
+
+
 <a name="3.5.0"></a>
 # [3.5.0](https://github.com/TylorS/typed-test/compare/v3.4.0...v3.5.0) (2017-10-11)
 
