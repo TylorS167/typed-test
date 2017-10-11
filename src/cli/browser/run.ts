@@ -13,7 +13,7 @@ import { options } from './options'
 import { resolveAliases } from '../resolveAliases'
 import { tempDir } from '../tempDir'
 
-const { paths, baseUrl } = options
+const { paths = {}, baseUrl = '' } = options
 const cwd = process.cwd()
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 7677
 

@@ -31,7 +31,7 @@ const { options } = ts.convertCompilerOptionsFromJson(
 )
 
 export function compile(fileNames: ReadonlyArray<string>): ReadonlyArray<string> {
-  const { paths, baseUrl } = options
+  const { paths = {}, baseUrl = '' } = options
 
   const aliases = resolveAliases(fileNames, paths, baseUrl)
 
