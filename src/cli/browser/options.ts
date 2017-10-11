@@ -19,9 +19,12 @@ const updatedCompilerOptions = {
   target: 'es5',
   noEmit: false,
   noEmitOnError: true,
-  outDir: tempDir.name
+  outDir: tempDir.name,
 }
 
 export const { options } = ts.convertCompilerOptionsFromJson(updatedCompilerOptions, cwd)
 
-fs.writeFileSync(CONFIG_PATH, JSON.stringify({ ...config, compilerOptions: updatedCompilerOptions }))
+fs.writeFileSync(
+  CONFIG_PATH,
+  JSON.stringify({ ...config, compilerOptions: updatedCompilerOptions })
+)
