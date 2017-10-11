@@ -1,3 +1,13 @@
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/TylorS/typed-test/compare/v3.0.0...v3.1.0) (2017-10-11)
+
+
+### Bug Fixes
+
+* improve alias resolving ([04e5133](https://github.com/TylorS/typed-test/commit/04e5133))
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/TylorS/typed-test/compare/v2.6.0...v3.0.0) (2017-10-11)
 
