@@ -29,7 +29,7 @@ export async function run(args: ParsedArgs, timeout: number) {
   const testFiles = map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, args._))
   const entries: Array<[string, string]> = [
     ...map((file, i): [string, string] => [`test${i}`, file], testFiles),
-    [`bundle`, path.join(__dirname, 'test-bundle.js')]
+    [`bundle`, path.join(__dirname, 'test-bundle.js')],
   ]
   const aliases = map(
     ([aliasName, path]): [string, string] => [aliasName, path.replace('/' + tempDir.name, '')],
@@ -96,7 +96,7 @@ function launchBrowser() {
         url,
         {
           browser: process.env.BROWSER || 'chrome',
-          options: [`--disable-gpu`]
+          options: [`--disable-gpu`],
         },
         (error: Error, instance: any) => {
           process.on('exit', () => {

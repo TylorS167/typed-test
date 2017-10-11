@@ -59,8 +59,7 @@ Promise.all(tests.map(test => test.run(timeout))).then(results => {
     method: 'POST',
     headers,
     body,
-  })
-  .then(() => {
+  }).then(() => {
     window.close()
   })
 })
