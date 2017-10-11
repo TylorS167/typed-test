@@ -38,7 +38,7 @@ export const test: Test = describe(`resolveAliases`, [
       const paths = {
         '@base/*': ['./src/*'],
       }
-      const baseUrl = ""
+      const baseUrl = ''
 
       equal([], resolveAliases(fileNames, paths, baseUrl))
     }),
