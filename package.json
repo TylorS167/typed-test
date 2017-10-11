@@ -6,8 +6,6 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "typings": "lib/index.d.ts",
-  "jsnext:main": "lib.es2015/index.js",
-  "module": "lib.es2015/index.js",
   "bin": {
     "typed-test": "lib/cli.js"
   },

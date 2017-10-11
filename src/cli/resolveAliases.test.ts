@@ -22,6 +22,28 @@ export const test: Test = describe(`resolveAliases`, [
     }),
   ]),
 
+  given(`[ "src/it.test.ts" ], {}, current working directory`, [
+    it(`returns []`, ({ equal }) => {
+      const fileNames = ['src/it.test.ts']
+      const paths = {}
+      const baseUrl = process.cwd()
+
+      equal([], resolveAliases(fileNames, paths, baseUrl))
+    }),
+  ]),
+
+  given(`[ "src/it.test.ts" ], { "@base/*": [ "./src/*" ] }, ""`, [
+    it(`returns []`, ({ equal }) => {
+      const fileNames = ['src/it.test.ts']
+      const paths = {
+        '@base/*': ['./src/*'],
+      }
+      const baseUrl = ""
+
+      equal([], resolveAliases(fileNames, paths, baseUrl))
+    }),
+  ]),
+
   given(`[ "src/it.test.ts" ], { "@base/*": [ "*" ] }, source directory`, [
     it(`returns [ [ "@base", "/path/to/temp-dir" ]`, ({ equal }) => {
       const cwd = process.cwd()

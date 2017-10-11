@@ -10,6 +10,8 @@ export function resolveAliases(
   paths: Record<string, Array<string>>,
   baseUrl: string
 ): ReadonlyArray<[string, string]> {
+  if (!baseUrl || equals({}, paths)) return []
+
   const rootFolders = uniq(
     filter<string>(
       pipe(str => str.indexOf('/'), equals(-1)),
