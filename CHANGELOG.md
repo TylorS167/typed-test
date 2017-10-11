@@ -1,3 +1,13 @@
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/TylorS/typed-test/compare/v2.6.0...v3.0.0) (2017-10-11)
+
+
+### Features
+
+* implement alias mapping ([df4e0bb](https://github.com/TylorS/typed-test/commit/df4e0bb))
+
+
+
 <a name="2.6.0"></a>
 # [2.6.0](https://github.com/TylorS/typed-test/compare/v2.5.0...v2.6.0) (2017-10-10)
 
