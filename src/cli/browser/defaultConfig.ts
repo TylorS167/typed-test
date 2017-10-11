@@ -1,5 +1,6 @@
 import * as path from 'path'
 
+import { CONFIG_PATH } from './options'
 import { tempDir } from '../tempDir'
 
 const cwd = process.cwd()
@@ -17,7 +18,7 @@ export const defaultConfig = {
   entry: {} as Record<string, string>,
   plugins: [
     new HtmlWebpackPlugin(HtmlOptions),
-    new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
+    new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true, tsconfig: CONFIG_PATH }),
   ],
   module: {
     rules: [
