@@ -1,3 +1,13 @@
+<a name="4.0.0"></a>
+# [4.0.0](https://github.com/TylorS/typed-test/compare/v3.6.0...v4.0.0) (2017-10-20)
+
+
+### Features
+
+* simplify Result type and implement watcher service ([ceb8a4c](https://github.com/TylorS/typed-test/commit/ceb8a4c))
+
+
+
 <a name="3.6.0"></a>
 # [3.6.0](https://github.com/TylorS/typed-test/compare/v3.5.0...v3.6.0) (2017-10-11)
 
