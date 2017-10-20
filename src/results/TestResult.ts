@@ -1,9 +1,10 @@
 import { cross, tick } from 'typed-figures'
 import { green, red } from 'typed-colors'
 
+import { Result } from '../types'
 import { errorToString } from 'assertion-error-diff'
 
-export class TestResult {
+export class TestResult implements Result {
   public name: string
   public passed: boolean
   public error: Error | null

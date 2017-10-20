@@ -1,13 +1,13 @@
 import * as expand from 'glob-expand'
 import * as path from 'path'
 
-import { flatten, map, range } from '167'
-import { green, red } from 'typed-colors'
+import { flatten, map } from '167'
 
 import { ParsedArgs } from '../types'
 import { TestResults } from '../../results'
 import { compile } from './compile'
 import { findTests } from './findTests'
+import { logResult } from '../logResult'
 
 const cwd = process.cwd()
 
@@ -24,30 +24,9 @@ export async function run(args: ParsedArgs, timeout: number) {
 
   console.time(TESTS_RUN_IN)
   const results = await Promise.all(tests.map(test => test.run(timeout)))
+  console.timeEnd(TESTS_RUN_IN)
 
   const overallResults = new TestResults('', results)
 
-  const { passed, failed } = overallResults.report()
-
-  console.log()
-  console.log(`  ` + overallResults.toString().trim())
-
-  if (failed > 0 && passed > 0) {
-    const separation = map(() => `-`, range(1, 36)).join('')
-
-    console.log()
-    console.error(`${separation}${red('Errors')}${separation}`)
-    console.error()
-    console.error(`  ` + overallResults.errors().trim())
-  }
-
-  console.log()
-  console.log(`${green(String(passed))} Passing`)
-  console.log(`${red(String(failed))} Failing`)
-
-  console.timeEnd(TESTS_RUN_IN)
-
-  if (failed > 0) process.exit(1)
-
-  process.exit(0)
+  process.exit(logResult(overallResults))
 }

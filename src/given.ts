@@ -1,4 +1,5 @@
-import { Test } from './types'
+import { Result, Test } from './types'
+
 import { TestResults } from './results'
 import { blue } from 'typed-colors'
 
@@ -40,7 +41,7 @@ export namespace given {
   }
 }
 
-function run(what: string, tests: Array<Test>, timeout: number): Promise<TestResults> {
+function run(what: string, tests: Array<Test>, timeout: number): Promise<Result> {
   const name = `${blue('given')} ${what}`
 
   return Promise.all(tests.map(test => test.run(timeout))).then(

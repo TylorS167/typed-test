@@ -15,7 +15,7 @@ export function resolveAliases(
   const rootFolders = uniq(
     filter<string>(
       pipe(str => str.indexOf('/'), equals(-1)),
-      map(dirname, map(n => relative(baseUrl, n), fileNames))
+      fileNames.map(n => relative(baseUrl, n)).map(dirname)
     )
   )
   const aliases = keys(paths)

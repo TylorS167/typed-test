@@ -1,4 +1,4 @@
-import { Done, Test, TestFn } from './types'
+import { Done, Result, Test, TestFn } from './types'
 
 import { TestResult } from './results'
 import { blue } from 'typed-colors'
@@ -43,7 +43,7 @@ export namespace it {
   }
 }
 
-function run(does: string, test: TestFn, timeout: number): Promise<TestResult> {
+function run(does: string, test: TestFn, timeout: number): Promise<Result> {
   const { stats, assertions } = createAssertionsEnvironment()
 
   const name = `${blue('it')} ${does}`

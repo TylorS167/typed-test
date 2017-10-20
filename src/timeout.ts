@@ -1,4 +1,5 @@
-import { Test } from './types'
+import { Result, Test } from './types'
+
 import { TestResults } from './results'
 import { describe } from './describe'
 
@@ -25,7 +26,7 @@ export function timeout(ms: number, tests: Array<Test>): Test {
   return {
     ...test,
     run() {
-      return test.run(ms).then((results: TestResults) => {
+      return test.run(ms).then((results: TestResults): Result => {
         const str = results
           .toString()
           .replace(/(\n\s\s)/g, '\n')
@@ -46,7 +47,7 @@ export function timeout(ms: number, tests: Array<Test>): Test {
           report() {
             return results.report()
           },
-        } as TestResults
+        }
       })
     },
   }

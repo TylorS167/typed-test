@@ -1,10 +1,10 @@
-import { TestResult } from './TestResult'
+import { Result, Results } from '../types'
 
-export class TestResults {
+export class TestResults implements Result {
   public name: string
-  public results: Array<TestResult | TestResults>
+  public results: Results
 
-  constructor(name: string, results: Array<TestResult | TestResults>) {
+  constructor(name: string, results: Results) {
     this.name = name
     this.results = results
   }
