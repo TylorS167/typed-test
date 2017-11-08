@@ -11,7 +11,7 @@ export function runBrowserTests(
   files: Array<string>,
   options: { timeout?: number; keepAlive?: boolean; config?: string } = {
     timeout: 2000,
-    keepAlive: false
+    keepAlive: false,
   }
 ): Stream<Result> {
   const args: ParsedArgs = {
@@ -21,7 +21,7 @@ export function runBrowserTests(
     help: false,
     requires: [],
     config: options.config,
-    keepAlive: options.keepAlive
+    keepAlive: options.keepAlive,
   }
 
   function run(sink: Sink<Result>, scheduler: Scheduler): Disposable {
@@ -34,7 +34,7 @@ export function runBrowserTests(
       compiler.watch(
         {
           aggregateTimeout: 300,
-          poll: 1000
+          poll: 1000,
         },
         (err: any, stats: any) => {
           logErrors(err, stats)

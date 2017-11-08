@@ -4,6 +4,6 @@ export type ParsedArgs = {
   requires: string | Array<string>
   help: boolean
   timeout: string
-  config: string,
+  config: string
   keepAlive: boolean
 }

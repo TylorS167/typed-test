@@ -14,7 +14,7 @@ export function launchBrowser(keepAlive = false) {
         {
           browser: process.env.BROWSER || 'chrome',
           options: [`--disable-gpu`],
-          detached: keepAlive
+          detached: keepAlive,
         },
         (error: Error, instance: any) => {
           if (error) return reject(error)

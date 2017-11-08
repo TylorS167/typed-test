@@ -19,8 +19,8 @@ export function createWatcher(options: Options): Stream<Result> {
 export type Options = {
   files: Array<string>
   timeout?: number
-  browser?: boolean,
-  keepAlive?: boolean,
+  browser?: boolean
+  keepAlive?: boolean
 }
 
 class Watcher implements Stream<Result> {
