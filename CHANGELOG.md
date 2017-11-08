@@ -1,3 +1,19 @@
+<a name="5.0.0"></a>
+# [5.0.0](https://github.com/TylorS/typed-test/compare/v4.0.0...v5.0.0) (2017-11-08)
+
+
+### Bug Fixes
+
+* remove unneeded console.log ([58f55ce](https://github.com/TylorS/typed-test/commit/58f55ce))
+
+
+### Features
+
+* implement keep alive behavior for browser tests ([f02898b](https://github.com/TylorS/typed-test/commit/f02898b)), closes [#4](https://github.com/TylorS/typed-test/issues/4)
+* improve speed of webpack build for browser tests ([d1807e6](https://github.com/TylorS/typed-test/commit/d1807e6))
+
+
+
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/TylorS/typed-test/compare/v3.6.0...v4.0.0) (2017-10-20)
 
