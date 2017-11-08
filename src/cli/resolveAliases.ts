@@ -1,7 +1,8 @@
 import { chain, equals, filter, keys, map, pipe, uniq } from '167'
 import { dirname, join, relative } from 'path'
 
-const { tempDir } = require('./tempDir')
+import { tempDir } from './tempDir'
+
 const cwd = process.cwd()
 
 export function resolveAliases(

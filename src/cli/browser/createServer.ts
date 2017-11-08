@@ -4,8 +4,7 @@ import * as express from 'express'
 import { cross, tick } from 'typed-figures'
 
 import { Result } from '../../types'
-
-const { tempDir } = require('../tempDir')
+import { tempDir } from '../tempDir'
 
 export function createServer(
   log: (message: string) => any,

@@ -1,8 +1,7 @@
 import * as path from 'path'
 
 import { CONFIG_PATH } from '../options'
-
-const { tempDir } = require('../tempDir')
+import { tempDir } from '../tempDir'
 
 const cwd = process.cwd()
 

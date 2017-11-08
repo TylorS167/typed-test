@@ -1,10 +1,11 @@
+import * as fs from 'fs'
+import * as path from 'path'
 import * as rimraf from 'rimraf'
 
+export const tempDir = { name: `.typed-test-${makeId()}` }
+
 try {
-  // Requiring 'tmp' will throw when compiling for browsers
-  // due to lack of support for 'process.binding'.
-  const tmp = require('tmp')
-  const tempDir = exports.tempDir = tmp.dirSync({ template: '.typed-test-XXXXXX' })
+  fs.mkdirSync(path.join(process.cwd(), tempDir.name))
 
   const cleanup = () => rimraf.sync(tempDir.name)
 
@@ -14,6 +15,13 @@ try {
   })
 
   process.on('exit', cleanup)
-} catch {
-  exports.tempDir = { name: '' }
+} catch {}
+
+function makeId(): string {
+  let text = ''
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  for (let i = 0; i < 6; i++) text += possible.charAt(Math.floor(Math.random() * possible.length))
+
+  return text
 }
