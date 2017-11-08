@@ -17,17 +17,15 @@ function log(...values: Array<any>) {
 
 console.log = log
 
+const testFiles: Array<any> = []
 const tests: Array<Test> = []
-let i: number = 0
 
-while (window.hasOwnProperty(`test${i}`)) {
-  const pkg = (window as any)[`test${i}`]
+testFiles.forEach(findTests)
 
+function findTests(pkg: any): void {
   if (isTest(pkg)) tests.push(pkg)
 
   for (const key in pkg) if (isTest(pkg[key])) tests.push(pkg[key])
-
-  ++i
 }
 
 function isTest(x: any): x is Test {

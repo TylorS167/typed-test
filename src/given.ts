@@ -5,13 +5,13 @@ import { blue } from 'typed-colors'
 
 /**
  * Allows creating a descriptive suite of tests from many other tests
- * 
+ *
  * To run only a single collection use `given.only()`
- * 
+ *
  * @name given(what: string, tests: Array<Test>): Test
  * @example
  * import { Test, describe, given it } from '@typed/test'
- * 
+ *
  * export const test: Test = describe('foo', [
  *   given('bar', [
  *     it('returns bar', ({ ok }) => {

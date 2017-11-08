@@ -5,13 +5,13 @@ import { blue } from 'typed-colors'
 
 /**
  * Allows creating a suite of tests from many other tests
- * 
+ *
  * To run only this collection of tests use `describe.only()`
- * 
+ *
  * @name describe(what: string, tests: Array<Test>): Test
  * @example
  * import { Test, describe, it } from '@typed/test'
- * 
+ *
  * export const test: Test = describe('foo', [
  *   it('returns bar', ({ ok }) => {
  *     ok(foo() === 'bar')
