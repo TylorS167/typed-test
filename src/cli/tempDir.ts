@@ -1,13 +1,19 @@
 import * as rimraf from 'rimraf'
-import * as tmp from 'tmp'
 
-export const tempDir = tmp.dirSync({ template: '.typed-test-XXXXXX' })
+try {
+  // Requiring 'tmp' will throw when compiling for browsers
+  // due to lack of support for 'process.binding'.
+  const tmp = require('tmp')
+  const tempDir = exports.tempDir = tmp.dirSync({ template: '.typed-test-XXXXXX' })
 
-const cleanup = () => rimraf.sync(tempDir.name)
+  const cleanup = () => rimraf.sync(tempDir.name)
 
-process.on('SIGINT', () => {
-  cleanup()
-  process.exit(1)
-})
+  process.on('SIGINT', () => {
+    cleanup()
+    process.exit(1)
+  })
 
-process.on('exit', cleanup)
+  process.on('exit', cleanup)
+} catch {
+  exports.tempDir = { name: '' }
+}

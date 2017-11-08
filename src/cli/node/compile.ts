@@ -5,8 +5,8 @@ import * as ts from 'typescript'
 import { map } from '167'
 import { options } from '../options'
 import { resolveAliases } from '../resolveAliases'
-import { tempDir } from '../tempDir'
 
+const { tempDir } = require('../tempDir')
 const moduleAlias = require('module-alias')
 const cwd = process.cwd()
 

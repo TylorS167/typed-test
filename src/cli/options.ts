@@ -2,12 +2,10 @@ import * as fs from 'fs'
 import * as ts from 'typescript'
 
 import { join } from 'path'
-import { tempDir } from './tempDir'
 
+const { tempDir } = require('./tempDir')
 const cwd = process.cwd()
-
 const configPath = ts.findConfigFile(cwd, (fileName: string) => fs.existsSync(fileName))
-
 const { config } = ts.parseConfigFileTextToJson(configPath, fs.readFileSync(configPath).toString())
 const { compilerOptions } = config
 

@@ -4,14 +4,14 @@ import { given } from '@base/given'
 import { it } from '@base/it'
 import { join } from 'path'
 import { resolveAliases } from './resolveAliases'
-import { tempDir } from './tempDir'
+const { tempDir } = require('./tempDir')
 
 export const test: Test = describe(`resolveAliases`, [
   given(`[ "src/it.test.ts" ], { "@base/*": [ "./src/*" ] }, current working directory`, [
     it(`returns [ [ "@base", "/path/to/temp-dir" ]`, ({ equal }) => {
       const fileNames = ['src/it.test.ts']
       const paths = {
-        '@base/*': ['./src/*'],
+        '@base/*': ['./src/*']
       }
       const baseUrl = process.cwd()
 
@@ -19,7 +19,7 @@ export const test: Test = describe(`resolveAliases`, [
 
       equal('@base', aliasName)
       equal(join(baseUrl, tempDir.name), path)
-    }),
+    })
   ]),
 
   given(`[ "src/it.test.ts" ], {}, current working directory`, [
@@ -29,19 +29,19 @@ export const test: Test = describe(`resolveAliases`, [
       const baseUrl = process.cwd()
 
       equal([], resolveAliases(fileNames, paths, baseUrl))
-    }),
+    })
   ]),
 
   given(`[ "src/it.test.ts" ], { "@base/*": [ "./src/*" ] }, ""`, [
     it(`returns []`, ({ equal }) => {
       const fileNames = ['src/it.test.ts']
       const paths = {
-        '@base/*': ['./src/*'],
+        '@base/*': ['./src/*']
       }
       const baseUrl = ''
 
       equal([], resolveAliases(fileNames, paths, baseUrl))
-    }),
+    })
   ]),
 
   given(`[ "src/it.test.ts" ], { "@base/*": [ "*" ] }, source directory`, [
@@ -49,7 +49,7 @@ export const test: Test = describe(`resolveAliases`, [
       const cwd = process.cwd()
       const fileNames = [join(cwd, 'src/it.test.ts')]
       const paths = {
-        '@base/*': ['*'],
+        '@base/*': ['*']
       }
       const baseUrl = join(cwd, 'src')
 
@@ -57,7 +57,7 @@ export const test: Test = describe(`resolveAliases`, [
 
       equal('@base', aliasName)
       equal(join(cwd, tempDir.name), path)
-    }),
+    })
   ]),
 
   given(`[ "src/it.test.ts", "test/test.ts" ], { "@base/*": [ "src/*" ] }, source directory`, [
@@ -65,7 +65,7 @@ export const test: Test = describe(`resolveAliases`, [
       const cwd = process.cwd()
       const fileNames = [join(cwd, 'src/it.test.ts'), join(cwd, 'test/test.ts')]
       const paths = {
-        '@base/*': ['src/*'],
+        '@base/*': ['src/*']
       }
       const baseUrl = join(cwd, 'src')
 
@@ -73,6 +73,6 @@ export const test: Test = describe(`resolveAliases`, [
 
       equal('@base', firstAliasName)
       equal(join(cwd, tempDir.name, 'src'), firstPath)
-    }),
-  ]),
+    })
+  ])
 ])
