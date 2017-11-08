@@ -1,3 +1,13 @@
+<a name="6.0.0"></a>
+# [6.0.0](https://github.com/TylorS/typed-test/compare/v5.0.0...v6.0.0) (2017-11-08)
+
+
+### Bug Fixes
+
+* out of the box support for browsers ([83c4393](https://github.com/TylorS/typed-test/commit/83c4393))
+
+
+
 <a name="5.0.0"></a>
 # [5.0.0](https://github.com/TylorS/typed-test/compare/v4.0.0...v5.0.0) (2017-11-08)
 
