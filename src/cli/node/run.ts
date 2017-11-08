@@ -14,6 +14,7 @@ const cwd = process.cwd()
 const TESTS_RUN_IN = `Tests run in`
 
 export async function run(args: ParsedArgs, timeout: number) {
+  console.log(args)
   if (args.requires) flatten([args.requires]).forEach(require)
 
   const testFiles = map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, args._))

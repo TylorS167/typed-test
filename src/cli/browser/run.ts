@@ -16,7 +16,7 @@ export async function run(args: ParsedArgs, timeout: number) {
     server.listen(PORT, '0.0.0.0', () => {
       console.log(`Test server running on port ${PORT}`)
 
-      launchBrowser()
+      launchBrowser(args.keepAlive)
     })
   })
 }

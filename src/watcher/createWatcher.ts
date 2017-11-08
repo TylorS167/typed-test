@@ -9,9 +9,9 @@ import { runNodeTests } from './runNodeTests'
 import { statSync } from 'fs'
 
 export function createWatcher(options: Options): Stream<Result> {
-  const { browser = false, files, timeout = 2000 } = options
+  const { browser = false, files } = options
 
-  const results = browser ? runBrowserTests(files, timeout) : new Watcher(options)
+  const results = browser ? runBrowserTests(files, options) : new Watcher(options)
 
   return multicast(results)
 }
@@ -19,7 +19,8 @@ export function createWatcher(options: Options): Stream<Result> {
 export type Options = {
   files: Array<string>
   timeout?: number
-  browser?: boolean
+  browser?: boolean,
+  keepAlive?: boolean,
 }
 
 class Watcher implements Stream<Result> {
