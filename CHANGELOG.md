@@ -1,3 +1,13 @@
+<a name="6.1.0"></a>
+# [6.1.0](https://github.com/TylorS/typed-test/compare/v6.0.0...v6.1.0) (2017-11-08)
+
+
+### Bug Fixes
+
+* ensure node and browser work out-of-box ([f15cc97](https://github.com/TylorS/typed-test/commit/f15cc97))
+
+
+
 <a name="6.0.0"></a>
 # [6.0.0](https://github.com/TylorS/typed-test/compare/v5.0.0...v6.0.0) (2017-11-08)
 
