@@ -1,3 +1,13 @@
+<a name="6.2.0"></a>
+# [6.2.0](https://github.com/TylorS/typed-test/compare/v6.1.0...v6.2.0) (2017-11-09)
+
+
+### Features
+
+* implement out-of-the-box code coverage ([d797fbb](https://github.com/TylorS/typed-test/commit/d797fbb))
+
+
+
 <a name="6.1.0"></a>
 # [6.1.0](https://github.com/TylorS/typed-test/compare/v6.0.0...v6.1.0) (2017-11-08)
 
