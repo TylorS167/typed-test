@@ -9,7 +9,7 @@ import { Result } from '../../types'
 import { tempDir } from '../tempDir'
 import { values } from '167'
 
-const fileUpload = require('express-fileupload');
+const fileUpload = require('express-fileupload')
 const cwd = process.cwd()
 
 export function createServer(
@@ -35,18 +35,20 @@ export function createServer(
     response.end()
   })
 
-  server.post('/coverage', (request: express.Request & {files: Files}, response: express.Response) => {
-    const [{ data }] = values(request.files)
-    const nycOutput = path.join(cwd, '.nyc_output')
-    const jsonFile = path.join(nycOutput, 'out.json')
+  server.post(
+    '/coverage',
+    (request: express.Request & { files: Files }, response: express.Response) => {
+      const [{ data }] = values(request.files)
+      const nycOutput = path.join(cwd, '.nyc_output')
+      const jsonFile = path.join(nycOutput, 'out.json')
 
-    if (!fs.existsSync(nycOutput))
-      fs.mkdirSync(nycOutput)
+      if (!fs.existsSync(nycOutput)) fs.mkdirSync(nycOutput)
 
-    fs.writeFileSync(jsonFile, data)
+      fs.writeFileSync(jsonFile, data)
 
-    response.end()
-  })
+      response.end()
+    }
+  )
 
   server.post('/end-server', (request: express.Request, response: express.Response) => {
     response.send()
@@ -77,8 +79,8 @@ type Files = {
 }
 
 type File = {
-  name: string,
-  mv: Function,
-  mimetype: string,
-  data: Buffer,
+  name: string
+  mv: Function
+  mimetype: string
+  data: Buffer
 }

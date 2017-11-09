@@ -8,7 +8,7 @@ const cwd = process.cwd()
 const HtmlOptions = {
   filename: `index.html`,
   inject: 'body',
-  template: path.join(__dirname, '../../../templates', 'index.ejs')
+  template: path.join(__dirname, '../../../templates', 'index.ejs'),
 }
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -22,7 +22,7 @@ export const defaultConfig = {
     new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true, tsconfig: CONFIG_PATH }),
     new IstanbulPlugin({
       test: /\.js$/,
-    })
+    }),
   ],
   devtool: 'source-map',
   module: {
@@ -31,33 +31,33 @@ export const defaultConfig = {
         test: /\.ts?$/,
         use: [
           {
-            loader: 'istanbul-instrumenter-loader'
+            loader: 'istanbul-instrumenter-loader',
           },
           {
             loader: 'ts-loader',
             options: {
               compilerOptions: {
-                declaration: false
-              }
-            }
+                declaration: false,
+              },
+            },
           },
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
   resolve: {
     mainFields: ['module', 'jsnext:main', 'browser', 'main'],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-    alias: {} as Record<string, string>
+    alias: {} as Record<string, string>,
   },
   output: {
     filename: '[name].js',
     libraryTarget: 'var',
     library: '[name]',
-    path: path.join(cwd, tempDir.name)
+    path: path.join(cwd, tempDir.name),
   },
   target: 'web',
   node: {
-    fs: 'empty'
-  }
+    fs: 'empty',
+  },
 }

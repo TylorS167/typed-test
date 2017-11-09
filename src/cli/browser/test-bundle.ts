@@ -9,9 +9,9 @@ function log(...values: Array<any>) {
   fetch(location.origin + '/log', {
     method: 'POST',
     headers: new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     }),
-    body: JSON.stringify(values.map(x => JSON.stringify(x, null, 2)))
+    body: JSON.stringify(values.map(x => JSON.stringify(x, null, 2))),
   })
 }
 
@@ -25,9 +25,9 @@ function error(...values: Array<any>) {
   fetch(location.origin + '/error', {
     method: 'POST',
     headers: new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     }),
-    body: JSON.stringify(values.map(x => JSON.stringify(x, null, 2)))
+    body: JSON.stringify(values.map(x => JSON.stringify(x, null, 2))),
   })
 }
 
@@ -61,7 +61,7 @@ Promise.all(tests.map(test => test.run(timeout))).then(results => {
     passed,
     failed,
     toString: overallResults.toString(),
-    errors: overallResults.errors()
+    errors: overallResults.errors(),
   })
 
   passing.textContent = String(passed) + ' Passing'
@@ -73,7 +73,7 @@ Promise.all(tests.map(test => test.run(timeout))).then(results => {
     fetch(location.origin + '/end-server', {
       method: 'POST',
       headers,
-      body
+      body,
     })
   )
 })
