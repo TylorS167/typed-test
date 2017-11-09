@@ -9,13 +9,29 @@ function log(...values: Array<any>) {
   fetch(location.origin + '/log', {
     method: 'POST',
     headers: new Headers({
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     }),
-    body: JSON.stringify(values.map(x => JSON.stringify(x, null, 2))),
+    body: JSON.stringify(values.map(x => JSON.stringify(x, null, 2)))
   })
 }
 
 console.log = log
+
+const __error = console.error.bind(console)
+
+function error(...values: Array<any>) {
+  __error(...values)
+
+  fetch(location.origin + '/error', {
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify(values.map(x => JSON.stringify(x, null, 2)))
+  })
+}
+
+console.error = error
 
 const testFiles: Array<any> = []
 const tests: Array<Test> = []
@@ -32,7 +48,7 @@ function isTest(x: any): x is Test {
   return x && x.hasOwnProperty('only') && typeof x.run === 'function'
 }
 
-const timeout = (window as any).TIMEOUT || 2000
+const timeout = window.TIMEOUT || 2000
 
 Promise.all(tests.map(test => test.run(timeout))).then(results => {
   const overallResults = new TestResults('', results)
@@ -45,7 +61,7 @@ Promise.all(tests.map(test => test.run(timeout))).then(results => {
     passed,
     failed,
     toString: overallResults.toString(),
-    errors: overallResults.errors(),
+    errors: overallResults.errors()
   })
 
   passing.textContent = String(passed) + ' Passing'
@@ -53,11 +69,30 @@ Promise.all(tests.map(test => test.run(timeout))).then(results => {
   rootNode.appendChild(passing)
   rootNode.appendChild(failing)
 
-  return fetch(location.origin + '/end-server', {
-    method: 'POST',
-    headers,
-    body,
-  }).then(() => {
-    window.close()
-  })
+  return sendCoverageFile(window.__coverage__).then(() =>
+    fetch(location.origin + '/end-server', {
+      method: 'POST',
+      headers,
+      body
+    })
+  )
 })
+
+function sendCoverageFile(coverage: any): Promise<any> {
+  if (!coverage || !window.COVERAGE) return Promise.resolve()
+
+  const file = new File([JSON.stringify(coverage, null, 2)], 'out.json')
+  const data = new FormData()
+  data.append('file', file)
+  const url = location.origin + '/coverage'
+
+  return fetch(url, { method: 'POST', body: data })
+}
+
+declare global {
+  export interface Window {
+    TIMEOUT: number
+    COVERAGE: number
+    __coverage__: any
+  }
+}

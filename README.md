@@ -73,6 +73,11 @@ sometimes be necessary to provide a webpack configuration file to use. The
 `--config` flag followed by a relative path to a webpack configuration file, this 
 configuration will be merged with the default configuration using [`webpack-merge`](https://github.com/survivejs/webpack-merge).
 
+## Code Coverage 
+
+If you'd like to run your tests with code coverage simply use the `--coverage`
+flag when running your tests.
+
 ## API
 
 #### `describe(what: string, tests: Array<Test | TestCollection>): Test`

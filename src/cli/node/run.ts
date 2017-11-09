@@ -17,9 +17,7 @@ export async function run(args: ParsedArgs, timeout: number) {
   if (args.requires) flatten([args.requires]).forEach(require)
 
   const testFiles = map(file => path.join(cwd, file), expand({ cwd, filter: 'isFile' }, args._))
-
   const compiledTestFiles = compile(testFiles)
-
   const tests = findTests(compiledTestFiles)
 
   console.time(TESTS_RUN_IN)
@@ -27,6 +25,7 @@ export async function run(args: ParsedArgs, timeout: number) {
   console.timeEnd(TESTS_RUN_IN)
 
   const overallResults = new TestResults('', results)
+  const exitCode = logResult(overallResults)
 
-  process.exit(logResult(overallResults))
+  process.exit(exitCode)
 }

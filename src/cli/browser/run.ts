@@ -2,12 +2,25 @@ import { PORT } from './constants'
 import { ParsedArgs } from '../types'
 import { buildCompiler } from './buildCompiler'
 import { createServer } from './createServer'
+import { execSync } from 'child_process'
 import { launchBrowser } from './launchBrowser'
 import { logResult } from '../logResult'
 
 export async function run(args: ParsedArgs, timeout: number) {
-  const compiler = buildCompiler(args, timeout)
-  const server = createServer(console.log, result => process.exit(logResult(result)))
+  const { compiler } = buildCompiler(args, timeout)
+  const server = createServer(console.log, console.error, result => {
+    const exitCode = logResult(result)
+
+    if (args.coverage) {
+      try {
+        const cmd = `nyc report --print=detail --exclude=${args._.join(',')}`
+        console.log()
+        execSync(cmd, { stdio: 'inherit' })
+      } catch {}
+    }
+
+    process.exit(exitCode)
+  })
 
   console.log('Bundling tests with webpack...')
   compiler.run((err: any, stats: any) => {

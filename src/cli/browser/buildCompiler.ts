@@ -14,7 +14,10 @@ const cwd = process.cwd()
 const Webpack = require('webpack')
 const webpackMerge = require('webpack-merge')
 
-export function buildCompiler(args: ParsedArgs, timeout: number): Compiler {
+export function buildCompiler(
+  args: ParsedArgs,
+  timeout: number
+): { compiler: Compiler; testFiles: Array<string> } {
   const config = webpackMerge(
     defaultConfig,
     typeof args.config === 'string' ? require(path.join(cwd, args.config)) : {}
@@ -29,12 +32,12 @@ export function buildCompiler(args: ParsedArgs, timeout: number): Compiler {
   const aliases = zip(aliasNames.map(stripExtraCharacters), aliasPaths.map(stripExtraCharacters))
 
   config.entry = entry
-  config.plugins.push(new Webpack.DefinePlugin({ TIMEOUT: timeout }))
+  config.plugins.push(new Webpack.DefinePlugin({ TIMEOUT: timeout, COVERAGE: args.coverage }))
 
   if (length(keys(config.resolve.alias)) === 0)
     Object.assign(config.resolve.alias, fromPairs(aliases))
 
-  return Webpack(config) as Compiler
+  return { compiler: Webpack(config) as Compiler, testFiles }
 }
 
 function stripExtraCharacters(str: string): string {

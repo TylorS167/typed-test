@@ -7,7 +7,8 @@
   "types": "lib/index.d.ts",
   "typings": "lib/index.d.ts",
   "bin": {
-    "typed-test": "lib/cli.js"
+    "typed-test": "lib/wrapped-cli.js",
+    "_typed-test": "lib/cli.js"
   },
   "author": "Tylor Steinberger <tlsteinberger167@gmail.com>",
   "license": "MIT",
@@ -22,6 +23,7 @@
     "conventional-changelog-cli": "1.3.4",
     "husky": "0.14.3",
     "lint-staged": "4.3.0",
+    "nyc": "11.3.0",
     "prettier": "1.8.1",
     "ts-node": "3.3.0",
     "typescript": "2.6.1",
@@ -33,9 +35,12 @@
     "assertion-error-diff": "1.0.0",
     "body-parser": "1.18.2",
     "express": "4.16.2",
+    "express-fileupload": "0.3.0",
     "fork-ts-checker-webpack-plugin": "0.2.8",
     "glob-expand": "0.2.1",
     "html-webpack-plugin": "2.30.1",
+    "istanbul": "0.4.5",
+    "istanbul-instrumenter-loader": "3.0.0",
     "james-browser-launcher": "1.3.1",
     "module-alias": "2.0.2",
     "rimraf": "2.6.2",
@@ -44,6 +49,7 @@
     "typed-colors": "1.0.0",
     "typed-figures": "1.0.0",
     "webpack": "3.8.1",
+    "webpack-istanbul-plugin": "0.0.5",
     "webpack-merge": "4.1.1",
     "yargs": "10.0.3"
   },
@@ -54,7 +60,7 @@
     ]
   },
   "scripts": {
-    "build": "yarn build:commonjs && chmod +x lib/cli.js",
+    "build": "yarn build:commonjs && chmod +x lib/cli.js && chmod +x lib/wrapped-cli.js",
     "build:commonjs": "tsc -P .config/tsconfig.commonjs.json",
     "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0 -p angular",
     "cleanup": "rimraf lib lib.es2015",
@@ -66,8 +72,8 @@
     "release:major": "npm version major -m 'chore(package): v%s'",
     "release:minor": "npm version minor -m 'chore(package): v%s'",
     "test": "yarn test:lint && yarn test:unit",
-    "test:browser": "yarn test:unit -- --browser",
+    "test:browser": "yarn test:unit --browser",
     "test:lint": "prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote --trailing-comma es5 --parser typescript 'src/*.ts' 'src/**/*.ts'",
-    "test:unit": "yarn build && node lib/cli.js 'src/*.test.ts' 'src/**/*.test.ts' 'test/**/*.ts'"
+    "test:unit": "yarn build && node lib/wrapped-cli.js 'src/**/*.test.ts' 'test/**/*.ts'"
   }
 }

@@ -6,4 +6,5 @@ export type ParsedArgs = {
   timeout: string
   config: string
   keepAlive: boolean
+  coverage: boolean
 }
