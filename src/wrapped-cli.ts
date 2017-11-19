@@ -1,34 +1,44 @@
 #!/usr/bin/env node
 
-import { join, resolve } from 'path'
-
 import { execSync } from 'child_process'
+import { existsSync } from 'fs'
+import { join } from 'path'
+import { resolveOne } from 'npm-module-path'
 
 const { argv } = process
 
 const willRunInBrowser = argv.indexOf('--browser') > -1
 const willRunCoverage = argv.indexOf('--coverage') > -1
+const shouldWrapWithNyc = !willRunInBrowser && willRunCoverage
+const args = argv.slice(2)
 
-if (!willRunInBrowser && willRunCoverage) {
-  let nycDir = resolve('nyc')
-  if (nycDir === join(process.cwd(), 'nyc')) nycDir = join(process.cwd(), 'node_modules/nyc')
+findCommand()
+  .then(cmd => execSync(cmd, { stdio: 'inherit' }))
+  .catch(error => {
+    console.error(error)
+    process.exit(1)
+  })
 
-  const nycBin = join(nycDir, 'bin', 'nyc.js')
-  let typedTest = resolve('@typed/test')
+function findCommand(): Promise<string> {
+  return Promise.all([findNycBin(), findTypedTestBin()]).then(
+    ([nycBin, typedTestBin]) =>
+      shouldWrapWithNyc
+        ? `${[nycBin, typedTestBin, ...args].join(' ')}`
+        : `${[typedTestBin, ...args].join(' ')}`
+  )
+}
 
-  if (typedTest === join(process.cwd(), '@typed/test')) typedTest = process.cwd()
+function findNycBin(): Promise<string> {
+  return resolveOne('nyc').then(nycDir => join(nycDir, 'bin', 'nyc.js'))
+}
 
-  const typedTestBin = join(typedTest, 'lib/cli.js')
-  const cmd = `${[nycBin, typedTestBin, ...argv.slice(2)].join(' ')}`
+function findTypedTestBin(): Promise<string> {
+  const nodeModuleBinPath = join(__dirname, 'typed-test')
+  const localTestsPath = join(__dirname, 'cli.js')
 
-  execSync(cmd, { stdio: 'inherit' })
-} else {
-  let typedTest = resolve('@typed/test')
+  if (existsSync(nodeModuleBinPath)) return Promise.resolve(nodeModuleBinPath)
 
-  if (typedTest === join(process.cwd(), '@typed/test')) typedTest = process.cwd()
+  if (existsSync(localTestsPath)) return Promise.resolve(localTestsPath)
 
-  const typedTestBin = join(typedTest, 'lib/cli.js')
-  const cmd = `${[typedTestBin, ...argv.slice(2)].join(' ')}`
-
-  execSync(cmd, { stdio: 'inherit' })
+  return resolveOne('@typed/test').then(typedTestDir => join(typedTestDir, 'lib', 'cli.js'))
 }
