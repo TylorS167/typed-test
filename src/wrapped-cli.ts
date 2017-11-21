@@ -20,16 +20,23 @@ findCommand()
   })
 
 function findCommand(): Promise<string> {
-  return Promise.all([findNycBin(), findTypedTestBin()]).then(
-    ([nycBin, typedTestBin]) =>
-      shouldWrapWithNyc
-        ? `${[nycBin, typedTestBin, ...args].join(' ')}`
-        : `${[typedTestBin, ...args].join(' ')}`
-  )
+  return Promise.all([findNycBin(), findTypedTestBin()]).then(([nycBin, typedTestBin]) => {
+    if (shouldWrapWithNyc) {
+      if (nycBin) return `${[nycBin, typedTestBin, ...args].join(' ')}`
+
+      console.log(`Unable to resolve NYC bin for coverage`)
+    }
+
+    return   `${[typedTestBin, ...args].join(' ')}`
+  })
 }
 
-function findNycBin(): Promise<string> {
-  return resolveOne('nyc').then(nycDir => join(nycDir, 'bin', 'nyc.js'))
+function findNycBin(): Promise<string | undefined> {
+  const nodeModuleBinPath = join(__dirname, 'nyc')
+
+  if (existsSync(nodeModuleBinPath)) return Promise.resolve(nodeModuleBinPath)
+
+  return resolveOne('nyc').then(nycDir => (nycDir ? join(nycDir, 'bin', 'nyc.js') : void 0))
 }
 
 function findTypedTestBin(): Promise<string> {
