@@ -1,3 +1,13 @@
+<a name="6.4.0"></a>
+# [6.4.0](https://github.com/TylorS/typed-test/compare/v6.3.0...v6.4.0) (2017-11-21)
+
+
+### Features
+
+* move nyc to hard dependency ([f2890fa](https://github.com/TylorS/typed-test/commit/f2890fa))
+
+
+
 <a name="6.3.0"></a>
 # [6.3.0](https://github.com/TylorS/typed-test/compare/v6.2.0...v6.3.0) (2017-11-19)
 
