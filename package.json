@@ -75,6 +75,6 @@
     "test": "yarn test:lint && yarn test:unit",
     "test:browser": "yarn test:unit --browser",
     "test:lint": "prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote --trailing-comma es5 --parser typescript 'src/*.ts' 'src/**/*.ts'",
-    "test:unit": "yarn build && node lib/wrapped-cli.js 'src/**/*.test.ts' 'test/**/*.ts'"
+    "test:unit": "yarn build && node lib/wrapped-cli.js 'src/*.test.ts' 'src/**/*.test.ts' 'test/*.ts'"
   }
 }

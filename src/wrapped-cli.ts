@@ -14,10 +14,7 @@ const args = argv.slice(2)
 
 findCommand()
   .then(cmd => execSync(cmd, { stdio: 'inherit' }))
-  .catch(error => {
-    console.error(error)
-    process.exit(1)
-  })
+  .catch(() => process.exit(1))
 
 function findCommand(): Promise<string> {
   return Promise.all([findNycBin(), findTypedTestBin()]).then(([nycBin, typedTestBin]) => {
@@ -27,7 +24,7 @@ function findCommand(): Promise<string> {
       console.log(`Unable to resolve NYC bin for coverage`)
     }
 
-    return   `${[typedTestBin, ...args].join(' ')}`
+    return `${[typedTestBin, ...args].join(' ')}`
   })
 }
 
