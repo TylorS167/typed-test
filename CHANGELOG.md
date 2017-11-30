@@ -1,3 +1,13 @@
+<a name="6.5.0"></a>
+# [6.5.0](https://github.com/TylorS/typed-test/compare/v6.4.0...v6.5.0) (2017-11-30)
+
+
+### Bug Fixes
+
+* ensure unusable information is not output to console ([ec4c2f1](https://github.com/TylorS/typed-test/commit/ec4c2f1))
+
+
+
 <a name="6.4.0"></a>
 # [6.4.0](https://github.com/TylorS/typed-test/compare/v6.3.0...v6.4.0) (2017-11-21)
 
